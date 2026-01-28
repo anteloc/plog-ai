@@ -1,0 +1,36 @@
+# Propositional-logic extraction of Martin Luther King Jr.'s "Declaration of Independence from the War in Vietnam"
+# Source text: mlk-war.md
+
+ATOM war_continues: "The war in Vietnam continues (the U.S. remains engaged)."
+ATOM speak_against_war: "King speaks out against the Vietnam war."
+ATOM war_enemy_of_poor: "The war functions as an enemy of the poor."
+ATOM poverty_program_eviscerated: "Domestic anti-poverty programs are broken/eviscerated."
+ATOM not_invest_in_poor: "America does not invest the necessary funds/energy to rehabilitate its poor."
+ATOM war_drains_resources: "The war draws men, skills, and money away from domestic needs."
+ATOM poor_sons_die: "The war sends disproportionately many poor people's family members to fight and die."
+ATOM govt_purveyor_violence: "The U.S. government is a major purveyor of violence."
+ATOM condemn_oppressed_violence: "King condemns violence by the oppressed in U.S. ghettos."
+ATOM must_address_govt_violence_first: "To condemn oppressed violence, one must first speak clearly against the government's violence."
+ATOM need_trust_both_sides: "Conflicts resolution require trustful give-and-take on both sides."
+ATOM america_wrong_from_beginning: "America has been wrong from the beginning of its Vietnam venture."
+ATOM no_honorable_intentions: "America has no honorable intentions in Vietnam."
+ATOM continue_war: "America continues its Vietnam course/war policy."
+ATOM end_bombing: "End all bombing in North and South Vietnam."
+ATOM unilateral_cease_fire: "Declare a unilateral cease-fire."
+ATOM prevent_expansion_sea: "Prevent other battlegrounds in Southeast Asia by curtailing military build-up/interference."
+ATOM accept_nlf_role: "Accept that the National Liberation Front has substantial support and must play a role."
+ATOM set_removal_date: "Set a date to remove all foreign troops from Vietnam per Geneva."
+ATOM initiate_halt: "America takes the initiative to bring the war to a halt."
+ATOM begin_extrication: "America begins extricating itself from the Vietnam nightmare."
+ATOM meaningful_negotiation: "Conditions exist for meaningful negotiation toward peace."
+
+FORMULA f_war_continues_drains_resources: war_continues -> war_drains_resources
+FORMULA f_war_drains_resources_not_invest_in_poor: war_drains_resources -> not_invest_in_poor
+FORMULA f_war_continues_poverty_program_eviscerated: war_continues -> poverty_program_eviscerated
+FORMULA f_underinvestment_or_eviscerated_programs_war_enemy_of_poor: (not_invest_in_poor | poverty_program_eviscerated) -> war_enemy_of_poor
+FORMULA f_war_harms_poor_motivates_speaking_out: (war_enemy_of_poor | poor_sons_die) -> speak_against_war
+FORMULA f_condemning_oppressed_violence_requires_addressing_govt_violence: (condemn_oppressed_violence -> must_address_govt_violence_first) & (must_address_govt_violence_first -> govt_purveyor_violence)
+FORMULA f_need_trust_both_sides_meaningful_negotiation: need_trust_both_sides -> meaningful_negotiation
+FORMULA f_five_steps_begin_extrication: (end_bombing & unilateral_cease_fire & prevent_expansion_sea & accept_nlf_role & set_removal_date) -> begin_extrication
+FORMULA f_begin_extrication_initiate_halt: begin_extrication -> initiate_halt
+FORMULA f_continue_war_and_wrong_no_honorable_intentions: continue_war & america_wrong_from_beginning -> no_honorable_intentions

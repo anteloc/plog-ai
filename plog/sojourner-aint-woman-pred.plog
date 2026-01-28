@@ -1,0 +1,31 @@
+ATOM women_helped_into_carriages: "Women are helped into carriages"
+ATOM sojourner_not_helped_into_carriages: "Sojourner Truth is not helped into carriages"
+ATOM sojourner_is_a_woman: "Sojourner Truth is a woman"
+ATOM sojourner_does_manual_labor: "Sojourner Truth performs hard manual labor"
+ATOM sojourner_can_work_as_much_as_man: "Sojourner Truth can work as much as a man"
+ATOM sojourner_bore_children: "Sojourner Truth bore thirteen children"
+ATOM children_sold_into_slavery: "Sojourner Truth's children were sold into slavery"
+ATOM women_have_less_rights_claimed: "Some men claim women have less rights than men"
+ATOM claim_christ_not_woman: "Claim that Christ was not a woman"
+ATOM christ_from_god_and_woman: "Christ came from God and a woman"
+ATOM men_had_no_role_in_christ: "Men had no role in Christ's origin"
+ATOM first_woman_strong: "The first woman was strong"
+ATOM women_collectively_strong: "Women together are strong"
+
+FORMULA f_injustice_in_treatment:
+    women_helped_into_carriages & sojourner_not_helped_into_carriages -> sojourner_is_a_woman
+
+FORMULA f_equality_through_labor:
+    sojourner_does_manual_labor -> sojourner_can_work_as_much_as_man
+
+FORMULA f_motherhood_and_suffering:
+    sojourner_bore_children & children_sold_into_slavery -> sojourner_is_a_woman
+
+FORMULA FALLACY_APPEAL_TO_AUTHORITY:
+    claim_christ_not_woman -> women_have_less_rights_claimed
+
+FORMULA f_counter_christ_argument:
+    christ_from_god_and_woman & men_had_no_role_in_christ -> sojourner_is_a_woman
+
+FORMULA f_collective_power:
+    first_woman_strong -> women_collectively_strong

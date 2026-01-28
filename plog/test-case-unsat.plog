@@ -1,0 +1,4 @@
+ATOM plato_is_man: "Plato is a man"
+FORMULA f_plato_is_man: plato_is_man
+FORMULA f_plato_is_not_man: ~ plato_is_man
+

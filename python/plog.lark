@@ -1,0 +1,66 @@
+// .plog grammar
+// Constraint: at least one ATOM declaration must appear in the file.
+
+start: statement*
+
+statement: atom_decl | formula_decl
+
+atom_decl: "ATOM" ATOM_NAME ":" desc
+formula_decl: "FORMULA" FORMULA_ID ":" expr
+
+desc: ESCAPED_STRING
+    | TRIPLE_STRING
+
+TRIPLE_STRING.2: /"""(.|\n)*?"""/
+
+// ---- Propositional expressions ----
+// Precedence (tight -> loose):
+//   NOT
+//   AND / NAND
+//   OR / NOR / XOR
+//   IMPLIES (right associative)
+//   IFF (left associative)
+
+?expr: iff
+?iff: impl (IFF impl)*
+?impl: orlike (IMP impl)?              -> implies   // right-assoc
+?orlike: andlike ((OR|NOR|XOR) andlike)*
+?andlike: notlike ((AND|NAND) notlike)*
+?notlike: NOT notlike                  -> neg
+        | atom_ref
+        | const
+        | "(" expr ")"
+
+atom_ref: ATOM_NAME
+
+const: TRUE  -> true
+     | FALSE -> false
+
+// Identifiers
+ATOM_NAME: /[A-Za-z_][A-Za-z0-9_]*/
+FORMULA_ID: /[A-Za-z_][A-Za-z0-9_]{2,}/
+
+// Operators (multi-char first)
+IFF: "<->" | "↔"
+IMP: "->" | "→"
+
+NAND: "!&" | "↑"
+NOR:  "!|" | "↓"
+
+XOR: "^" | "⊕"
+
+AND: "&" | "∧"
+OR:  "|" | "∨"
+
+NOT: "~" | "¬" | "!"
+
+TRUE: "TRUE" | "True" | "⊤"
+FALSE: "FALSE" | "False" | "⊥"
+
+%import common.ESCAPED_STRING
+%import common.WS_INLINE
+%import common.NEWLINE
+
+%ignore WS_INLINE
+%ignore NEWLINE
+%ignore /#[^\n]*/

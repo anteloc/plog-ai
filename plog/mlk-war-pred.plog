@@ -1,0 +1,64 @@
+# mlk_war.plog
+# Propositional-logic abstraction of MLK's "Declaration of Independence from the War in Vietnam"
+
+# --- Atoms ---
+ATOM speaks_against_war: "King speaks publicly against the Vietnam war."
+ATOM moral_calling: "King's calling/mission provides moral reasons to speak about the war."
+ATOM war_in_moral_vision: "The Vietnam war belongs within King's moral vision (is morally relevant to his mission)."
+ATOM silence_wrong: "Remaining silent about the war is morally unacceptable for King."
+
+ATOM war_harms_poverty_prog: "The war undermines anti-poverty programs / investment in the poor."
+ATOM war_enemy_poor: "The war is an enemy of the poor."
+ATOM war_burdens_poor: "The war imposes disproportionate death/sacrifice on the poor/Black Americans."
+ATOM cruel_irony: "There is a cruel irony: people fight for liberties abroad not enjoyed at home."
+
+ATOM govt_purveyor_violence: "The U.S. government is a major purveyor of violence."
+ATOM can_coherently_condemn: "King can coherently condemn violence of the oppressed without hypocrisy."
+
+ATOM conflict_needs_trust: "Conflicts are not resolved without mutual trust and reciprocal give-and-take."
+ATOM us_greatest_responsibility: "The U.S. bears the greatest responsibility to end/stop the conflict."
+
+ATOM continue_war: "The war continues as-is."
+ATOM intentions_not_honorable: "If the war continues, the world concludes U.S. intentions are not honorable."
+ATOM seen_as_colony: "If the war continues, the U.S. will be viewed as seeking occupation/colony."
+ATOM provoke_wider_war: "If the war continues, the U.S. may be perceived as trying to provoke a wider war."
+ATOM america_soul_poisoned: "America's moral integrity ('soul') is poisoned by the war."
+
+ATOM war_symptom_deeper_malady: "The Vietnam war is a symptom of a deeper malady in American spirit."
+ATOM revolution_values_needed: "America must undergo a radical revolution of values."
+ATOM activism_without_end: "Without profound change, activism continues without end."
+
+ATOM end_bombing: "End all bombing in North and South Vietnam."
+ATOM cease_fire: "Declare a unilateral cease-fire."
+ATOM prevent_sea_expansion: "Prevent expansion in SE Asia (curtail build-up in Thailand and interference in Laos)."
+ATOM include_nlf: "Include NLF in meaningful negotiations/future government."
+ATOM remove_foreign_troops: "Set a date to remove all foreign troops per the Geneva Agreement."
+ATOM policy_five: "The U.S. adopts the five concrete actions (as a package)."
+
+# --- Formulas (all ON by default in your simulator) ---
+
+# Role / calling ⇒ speaking out
+FORMULA f_role_to_speak: moral_calling -> speaks_against_war
+
+# War harms the poor ⇒ war is morally relevant ⇒ silence is wrong ⇒ speaking out
+FORMULA f_poverty_prog_enemy: war_harms_poverty_prog -> war_enemy_poor
+FORMULA f_poor_bundle_to_moral: (war_enemy_poor & war_burdens_poor & cruel_irony) -> war_in_moral_vision
+FORMULA f_moral_to_silence_wrong: war_in_moral_vision -> silence_wrong
+FORMULA f_silence_wrong_to_speak: silence_wrong -> speaks_against_war
+
+# Coherence about violence: if government is purveyor of violence, condemning oppressed violence coherently requires speaking out
+FORMULA f_govt_violence_coherence: govt_purveyor_violence -> (can_coherently_condemn -> speaks_against_war)
+
+# U.S. responsibility ⇒ U.S. initiative (policy package)
+FORMULA f_us_resp_to_policy: us_greatest_responsibility -> policy_five
+FORMULA f_policy_def: policy_five <-> (end_bombing & cease_fire & prevent_sea_expansion & include_nlf & remove_foreign_troops)
+
+# Continuing war ⇒ reputational/moral damage
+FORMULA f_continue_to_repute: continue_war -> (intentions_not_honorable & seen_as_colony & provoke_wider_war & america_soul_poisoned)
+
+# War as symptom ⇒ revolution of values; lack of revolution ⇒ activism without end
+FORMULA f_symptom_to_revolution: war_symptom_deeper_malady -> revolution_values_needed
+FORMULA f_no_revolution_to_endless: ~revolution_values_needed -> activism_without_end
+
+# Negotiation condition (kept as a standalone thesis atom)
+FORMULA f_conflict_trust: conflict_needs_trust
