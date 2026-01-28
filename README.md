@@ -11,9 +11,9 @@
 
 - **Automated Text Analysis** — Feed documents to an AI assistant that converts prose into formal logic
 - **Formal Verification** — Uses Z3 theorem prover to detect logical contradictions
+- **Fallacy Detection** — Identifies logical fallacies in arguments and reasoning
 - **Interactive Simulation** — Explore "what-if" scenarios by toggling facts and observing effects
 - **Multiple Logic Systems** — Supports both propositional and predicate (first-order) logic
-- **Fallacy Detection** — Identifies logical fallacies in arguments and reasoning
 
 ## Use Cases
 
