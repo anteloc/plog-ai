@@ -50,9 +50,11 @@ python plog.py --help
 
 1. Open your AI chat interface (claude.ai, chatgpt.com, etc.)
 2. Start a new conversation with this prompt:
-   ```
-   Follow the attached instructions and process the attached document.
-   ```
+
+```
+Follow the attached instructions and process the attached document.
+```
+
 3. Attach the following files:
    - Your document to analyze (`.md` format recommended)
    - `python/plog.lark` — Grammar specification
