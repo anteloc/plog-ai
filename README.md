@@ -190,6 +190,19 @@ The `plog/` directory contains analyzed examples:
 - Requires manual review of AI-generated translations for accuracy
 - Best suited for argumentative/declarative texts
 
+## WIP
+
+Current `plog.py` and `plog.lark` files have been mostly generated via chat AIs, e.g. Claude and ChatGPT mostly, so the code requires quite some refactoring and cleanup effort to be in good shape.
+
+Also, output from the tool, both in interactive and non-interactive mode, requires more polishing.
+
+Main focus should be on improving readability and making more understandable the "what's" and "why's":
+
+- What is inconsistent/contradictory/a fallacy on this text?
+- Why this or that fact or assumption cause a contradiction?
+
+Another possibility I've been considering would be adding this script as part of a SKILL for AI agents, that would help users to "live" review texts for contradictions or inconsistencies.
+
 ## Contributing
 
 This is an experimental project exploring the intersection of LLMs and formal verification. Contributions, ideas, and feedback are welcome!
