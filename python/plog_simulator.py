@@ -446,7 +446,7 @@ class PlainEnglishAnalyzer:
     
     def classify_flaw(self, formula_id: str) -> str:
         expr = self.categorized.regular_formulas.get(formula_id)
-        if not expr:
+        if expr is None:
             return 'unknown'
         solver = Solver()
         solver.add(expr)
