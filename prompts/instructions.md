@@ -1,6 +1,6 @@
 # TASK DEFINITION
 
-Translate the given attached text.md document into propositional logic statements in .plog format for further text analysis by other software tooling.
+Translate the attached document specified by the user into propositional logic statements in .plog format for further text analysis by other software tooling.
 
 # STEPS
 
@@ -75,21 +75,22 @@ Run the validator script `plog.py` on the `logic-results.plog` from previous ste
 python3 plog.py --grammar ./plog.lark logic-results.plog
 ```
 
-Validation is considered **PASSED** when it exits with code 0 or 1
-Validation is considered **FAILED** when it exits with code 2
+Validation results:
+- **PASSED**: for exit codes 0 or 1
+- **FAILED**: for exit code 2
 
 ## STEP 5 - ITERATIVE CORRECTION
 
-If the validation from the previous step fails:
+If validation from the previous step fails:
 
-1. Review and correct if required: the text-to-propositional logic translation
-2. Review and correct if required: the propositional logic-to-plog translation
-3. Validate `logic-results.plog` syntax against `plog.lark`
+1. Review the text-to-propositional logic translation
+2. Review the propositional logic-to-plog translation
+3. If parsing error reported, review and correct `logic-results.plog`
 4. Go back to the previous step and re-run the validator script
 
 ## STEP 5 - DELIVERABLES
 
-Once the `logic-results.plog` file PASSes the validation, make available for the user to download:
+Once the `logic-results.plog` file PASSESS the validation, make available for the user to download:
 
 * The output from plog.py for the validation execution in a `logic-analysis.md` file
 * The `logic-results.plog` file

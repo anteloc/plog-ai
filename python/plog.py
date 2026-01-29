@@ -24,7 +24,7 @@ from pathlib import Path
 from enum import Enum
 from dataclasses import dataclass, field
 from typing import Optional, Callable
-from lark import Lark, Transformer, v_args
+from lark import Lark, LarkError, Transformer, v_args
 from z3 import (
     Bool, And, Or, Not, Xor, Implies, BoolVal,
     Solver, sat, unsat, BoolRef
@@ -1128,6 +1128,10 @@ def main():
 
     except FileNotFoundError as e:
         print(f"\n❌ Error: Could not find file - {e}\n")
+        sys.exit(2)
+    except LarkError as e:
+        # print error message only, avoid full traceback
+        print(f"\n❌ Parsing Error: {e}\n")
         sys.exit(2)
     except Exception as e:
         print(f"\n❌ Error: {e}\n")

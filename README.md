@@ -53,16 +53,14 @@ python plog.py
 2. Start a new conversation with this prompt:
 
 ```
-Follow the attached instructions and process the attached document.
+Follow the attached instructions and process the attached document named <your document name here>
 ```
 
 3. Attach the following files:
 - Your document to analyze (`.md` format recommended)
 - `python/plog.lark` — Grammar specification
 - `python/plog.py` — Validation script
-- One of the instruction files from `prompts/`:
-  - `instructions-pred-logic.md` for predicate logic analysis
-  - `instructions-prop-logic.md` for propositional logic analysis
+- `prompts/instructions.md` - Analysis process instructions
 
 The AI will produce:
 - `logic-results.plog` — Your text translated to formal logic
