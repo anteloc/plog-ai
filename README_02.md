@@ -11,7 +11,7 @@
 
 - **Automated Text Analysis** — Feed documents to an AI assistant that converts prose into formal logic
 - **Formal Verification** — Uses Z3 SAT solver to detect logical contradictions
-- **Fallacy Detection** — Identifies and reports logical fallacies using tagged formulas (`FALLACY_*` atoms, `f_FALLACY_*` formulas)
+- **Fallacy Detection** — Identifies and reports logical fallacies using tagged formulas (`FALLACY_*` atoms, `f_tag_*` formulas)
 - **Plain English Reports** — Human-readable analysis output explaining what's wrong and why
 - **Interactive Simulation** — Explore "what-if" scenarios by toggling facts, formulas, and fallacy detection
 - **Multiple Logic Systems** — Supports both propositional and predicate (first-order) logic
@@ -42,7 +42,7 @@ pip install PyYAML lark z3-solver simple-term-menu
 Verify the installation:
 
 ```bash
-python plog.py
+python plog_simulator.py
 ```
 
 ## Usage
@@ -57,16 +57,16 @@ Follow the attached instructions and process the attached document.
 ```
 
 3. Attach the following files:
-- Your document to analyze (`.md` format recommended)
-- `python/plog.lark` — Grammar specification
-- `python/plog.py` — Validation script
-- One of the instruction files from `prompts/`:
-  - `instructions-pred-logic.md` for predicate logic analysis
-  - `instructions-prop-logic.md` for propositional logic analysis
+  - Your document to analyze (`.md` format recommended)
+  - `python/plog.lark` — Grammar specification
+  - `python/plog.py` — Validation script
+  - One of the instruction files from `prompts/`:
+    - `instructions-pred-logic.md` for predicate logic analysis
+    - `instructions-prop-logic.md` for propositional logic analysis
 
 The AI will produce:
 - `logic-results.plog` — Your text translated to formal logic
-- `logic-analysis.md` — Validation results
+- `logic-analysis.json` — Validation results
 - A plain-English interpretation of any inconsistencies found
 
 ### Direct Analysis (Non-Interactive)
@@ -74,7 +74,7 @@ The AI will produce:
 Analyze a `.plog` file and get a plain English report:
 
 ```bash
-python plog.py document.plog
+python plog_simulator.py document.plog
 ```
 
 The tool will output:
@@ -91,9 +91,9 @@ Exit codes: `0` = consistent, `1` = inconsistencies or fallacies found
 Explore "what-if" scenarios by toggling facts and formulas:
 
 ```bash
-python plog.py --interactive document.plog
+python plog_simulator.py --interactive document.plog
 # or
-python plog.py -i document.plog
+python plog_simulator.py -i document.plog
 ```
 
 **Interactive features:**
@@ -178,7 +178,7 @@ The author uses flawed reasoning techniques to persuade.
 ```
 plog-ai/
 ├── python/
-│   ├── plog.py  # Main tool: parser, Z3 translator, analyzer, simulator
+│   ├── plog_simulator.py  # Main tool: parser, Z3 translator, analyzer, simulator
 │   └── plog.lark          # Grammar specification for .plog format
 ├── prompts/
 │   ├── instructions-pred-logic.md   # AI instructions (predicate logic)
@@ -215,8 +215,8 @@ To enable fallacy detection, use these naming conventions:
 # FALLACY_* atoms are hidden metadata (descriptions of fallacy types)
 ATOM FALLACY_appeal_to_popularity: "FALLACY: Appeal to popularity - 'Everyone knows' does not establish truth"
 
-# f_FALLACY_* formulas trigger fallacy detection
-FORMULA f_FALLACY_appeal_to_popularity: everyone_knows_X -> FALLACY_appeal_to_popularity
+# f_tag_* formulas trigger fallacy detection
+FORMULA f_tag_appeal_to_popularity: everyone_knows_X -> FALLACY_appeal_to_popularity
 ```
 
 **Supported operators:**
@@ -239,7 +239,7 @@ FORMULA f_FALLACY_appeal_to_popularity: everyone_knows_X -> FALLACY_appeal_to_po
   - Regular atoms (facts) — assumed TRUE
   - Regular formulas (reasoning) — logical connections
   - Fallacy atoms (`FALLACY_*`) — hidden metadata
-  - Fallacy tag formulas (`f_FALLACY_*`) — detection rules
+  - Fallacy tag formulas (`f_tag_*`) — detection rules
 4. **Fallacy Detection** — Tag formulas are evaluated to find active fallacies
 5. **Consistency Check** — Z3 SAT solver verifies logical consistency:
    - **SAT** → No contradictions detected
