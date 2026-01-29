@@ -57,6 +57,18 @@ class EvaluationResult:
     details: str
 
 
+@dataclass 
+class PlainEnglishReport:
+    """A report designed for non-experts."""
+    is_consistent: bool
+    verdict: str
+    facts_summary: str
+    reasoning_summary: str
+    problems_found: list[str]
+    detailed_explanations: list[str]
+    bottom_line: str
+
+
 # =============================================================================
 # Lark Transformer: Parse Tree -> Z3 Expressions
 # =============================================================================
@@ -259,6 +271,273 @@ class PlainEnglishConverter:
             return f"EITHER {left} OR {right} (but not both)"
 
         return f"[{expr_str}]"
+    def explain_flaw_type(self, flaw_type: str, formula_id: str, 
+                          involved_facts: list[str], expr) -> str:
+        """Generate a plain English explanation for a type of flaw."""
+        
+        if flaw_type == 'self_contradictory':
+            return (
+                f"🚫 This statement is IMPOSSIBLE. It's like saying "
+                f"\"it's raining and not raining at the same time.\" "
+                f"No matter what, this can never be true. "
+                f"The text states something that contradicts itself within the same breath."
+            )
+        
+        elif flaw_type == 'contradicts_facts':
+            facts_mentioned = [self.get_fact_description(f.split(':')[0].strip()) 
+                              for f in involved_facts]
+            facts_str = " and ".join(facts_mentioned) if facts_mentioned else "the stated facts"
+            
+            return (
+                f"🔴 This reasoning DIRECTLY CONTRADICTS what the text also claims as fact. "
+                f"The text says {facts_str} are true, but this statement can't be true "
+                f"if those facts are true. It's essentially saying \"X is true\" "
+                f"and then making an argument that requires \"X is false.\""
+            )
+        
+        elif flaw_type == 'conflicts_with_reasoning':
+            return (
+                f"⚠️ This statement, on its own, could be true. But when you put it together "
+                f"with the text's OTHER statements, they can't ALL be true at the same time. "
+                f"The text has made multiple claims that are individually reasonable "
+                f"but collectively impossible."
+            )
+        
+        return "❓ There's something off about this statement."
+
+# =============================================================================
+# Plain English Analyzer
+# =============================================================================
+
+class PlainEnglishAnalyzer:
+    """Analyzes reasoning and produces plain English reports."""
+    
+    def __init__(self, parsed_result: dict):
+        self.atoms = parsed_result['atoms']
+        self.formulas = parsed_result['formulas']
+        self.converter = PlainEnglishConverter(self.atoms)
+    
+    def _add_facts_as_true(self, solver: Solver):
+        for atom_name, info in self.atoms.items():
+            solver.add(info['z3_var'] == True)
+    
+    def _extract_atom_names(self, expr) -> list[str]:
+        atoms_found = []
+        def traverse(e):
+            if isinstance(e, BoolRef):
+                if e.num_args() == 0 and str(e) not in ('True', 'False'):
+                    atoms_found.append(str(e))
+                else:
+                    for i in range(e.num_args()):
+                        traverse(e.arg(i))
+        traverse(expr)
+        return list(set(atoms_found))
+    
+    def check_consistency(self) -> bool:
+        solver = Solver()
+        self._add_facts_as_true(solver)
+        for expr in self.formulas.values():
+            solver.add(expr)
+        return solver.check() == sat
+    
+    def find_minimal_conflict(self) -> list[str]:
+        solver = Solver()
+        solver.set(':core.minimize', True)
+        self._add_facts_as_true(solver)
+        
+        for formula_id, expr in self.formulas.items():
+            tracker = Bool(f'__track_{formula_id}')
+            solver.assert_and_track(expr, tracker)
+        
+        if solver.check() == unsat:
+            core = solver.unsat_core()
+            return [str(c).replace('__track_', '') for c in core]
+        return []
+    
+    def classify_flaw(self, formula_id: str) -> str:
+        expr = self.formulas[formula_id]
+        
+        # Self-contradictory
+        solver = Solver()
+        solver.add(expr)
+        if solver.check() == unsat:
+            return 'self_contradictory'
+        
+        # Contradicts facts
+        solver = Solver()
+        self._add_facts_as_true(solver)
+        solver.add(expr)
+        if solver.check() == unsat:
+            return 'contradicts_facts'
+        
+        return 'conflicts_with_reasoning'
+    
+    def find_pairwise_conflicts(self) -> list[tuple[str, str]]:
+        conflicts = []
+        formula_ids = list(self.formulas.keys())
+        
+        for i, id1 in enumerate(formula_ids):
+            for id2 in formula_ids[i+1:]:
+                solver = Solver()
+                self._add_facts_as_true(solver)
+                solver.add(self.formulas[id1])
+                solver.add(self.formulas[id2])
+                
+                if solver.check() == unsat:
+                    conflicts.append((id1, id2))
+        
+        return conflicts
+    
+    def generate_report(self) -> PlainEnglishReport:
+        """Generate a complete plain English report."""
+        
+        is_consistent = self.check_consistency()
+        
+        # === VERDICT ===
+        if is_consistent:
+            verdict = "✅ THE REASONING CHECKS OUT"
+        else:
+            verdict = "❌ THERE ARE PROBLEMS WITH THIS REASONING"
+        
+        # === FACTS SUMMARY ===
+        facts_lines = ["Here's what the text states as facts:\n"]
+        for i, (atom_name, info) in enumerate(self.atoms.items(), 1):
+            desc = info['description'] or atom_name.replace('_', ' ')
+            facts_lines.append(f"  {i}. \"{desc}\"")
+        facts_summary = "\n".join(facts_lines)
+        
+        # === REASONING SUMMARY ===
+        reasoning_lines = ["Here's the reasoning/connections the text makes:\n"]
+        for i, (formula_id, expr) in enumerate(self.formulas.items(), 1):
+            plain = self.converter.expr_to_plain_english(expr)
+            reasoning_lines.append(f"  {i}. {plain}")
+        reasoning_summary = "\n".join(reasoning_lines)
+        
+        # === PROBLEMS FOUND ===
+        problems_found = []
+        detailed_explanations = []
+        
+        if not is_consistent:
+            conflict_formulas = self.find_minimal_conflict()
+            pairwise = self.find_pairwise_conflicts()
+            
+            # Main problem summary
+            problems_found.append(
+                f"Found {len(conflict_formulas)} problematic statement(s) "
+                f"that cause the contradiction."
+            )
+            
+            # Detailed explanations for each problematic formula
+            for formula_id in conflict_formulas:
+                expr = self.formulas[formula_id]
+                flaw_type = self.classify_flaw(formula_id)
+                involved = self._extract_atom_names(expr)
+                involved_with_desc = [
+                    f"{a}: \"{self.atoms[a]['description']}\"" 
+                    for a in involved if a in self.atoms and self.atoms[a]['description']
+                ]
+                
+                plain_expr = self.converter.expr_to_plain_english(expr)
+                explanation = self.converter.explain_flaw_type(
+                    flaw_type, formula_id, involved_with_desc, expr
+                )
+                
+                detailed_explanations.append(
+                    f"PROBLEM: \"{plain_expr}\"\n\n{explanation}"
+                )
+            
+            # Add pairwise conflict explanations
+            if pairwise:
+                conflict_explanation = "\n\n📍 SPECIFICALLY, these statements clash with each other:\n"
+                for id1, id2 in pairwise:
+                    expr1_plain = self.converter.expr_to_plain_english(self.formulas[id1])
+                    expr2_plain = self.converter.expr_to_plain_english(self.formulas[id2])
+                    conflict_explanation += (
+                        f"\n  • \"{expr1_plain}\"\n"
+                        f"    CONFLICTS WITH\n"
+                        f"    \"{expr2_plain}\"\n"
+                    )
+                detailed_explanations.append(conflict_explanation)
+        
+        # === BOTTOM LINE ===
+        if is_consistent:
+            bottom_line = (
+                f"👍 BOTTOM LINE: Based on the {len(self.atoms)} facts stated and "
+                f"{len(self.formulas)} logical connection(s) made, "
+                f"everything the text states is internally consistent. "
+                f"Its logic holds together - there are no logical contradictions. "
+                f"This doesn't mean everything it states is TRUE, just that "
+                f"its statements don't contradict each other."
+            )
+        else:
+            bottom_line = (
+                f"👎 BOTTOM LINE: The text's statements don't add up. "
+                f"It states claims that logically cannot all be true at the same time. "
+                f"Either some of the stated \"facts\" are wrong, or its reasoning is flawed. "
+                f"See the details above for exactly where the problems are."
+            )
+        
+        return PlainEnglishReport(
+            is_consistent=is_consistent,
+            verdict=verdict,
+            facts_summary=facts_summary,
+            reasoning_summary=reasoning_summary,
+            problems_found=problems_found,
+            detailed_explanations=detailed_explanations,
+            bottom_line=bottom_line
+        )
+
+
+# =============================================================================
+# Report Printer
+# =============================================================================
+
+def print_plain_english_report(report: PlainEnglishReport):
+    """Print the report in a user-friendly format."""
+    
+    width = 70
+    
+    print("\n" + "=" * width)
+    print("  🔍 TEXT LOGIC CHECKER - ANALYSIS REPORT")
+    print("=" * width)
+    
+    # Verdict banner
+    print("\n" + "-" * width)
+    if report.is_consistent:
+        print(f"  {report.verdict}")
+    else:
+        print(f"  {report.verdict}")
+    print("-" * width)
+    
+    # What was said (facts)
+    print("\n📋 WHAT THE TEXT STATES AS FACTS:")
+    print("-" * width)
+    print(report.facts_summary)
+    
+    # Reasoning/connections
+    print("\n🔗 THE LOGIC PRESENT IN THE TEXT:")
+    print("-" * width)
+    print(report.reasoning_summary)
+    
+    # Problems (if any)
+    if not report.is_consistent:
+        print("\n" + "=" * width)
+        print("  🚨 PROBLEMS DETECTED")
+        print("=" * width)
+        
+        for problem in report.problems_found:
+            print(f"\n{problem}")
+        
+        for i, explanation in enumerate(report.detailed_explanations, 1):
+            print(f"\n{'─' * width}")
+            print(explanation)
+    
+    # Bottom line
+    print("\n" + "=" * width)
+    print("  📝 SUMMARY")
+    print("=" * width)
+    print(f"\n{report.bottom_line}")
+    print("\n" + "=" * width + "\n")
 
 
 # =============================================================================
@@ -730,13 +1009,13 @@ def main():
         print("\n" + "═" * 60)
         print("  🔬 PLOG WHAT-IF SIMULATOR")
         print("═" * 60)
-        print("\nAnalyze speech transcripts and explore what-if scenarios.")
+        print("\nAnalyze text and explore what-if scenarios.")
         print("\nUsage:")
-        print("  python plog_simulator.py <plog_file>")
-        print("  python plog_simulator.py --interactive <plog_file>")
+        print("  python plog_simulator.py <plog_file>                  # Run analysis and exit")
+        print("  python plog_simulator.py --interactive <plog_file>    # Interactive mode")
         print("\nExamples:")
         print("  python plog_simulator.py speech.plog")
-        print("  python plog_simulator.py --interactive test-alibi.plog")
+        print("  python plog_simulator.py -i test-alibi.plog")
         print("\n" + "═" * 60 + "\n")
         sys.exit(1)
 
@@ -774,15 +1053,16 @@ def main():
             print("❌ Error: No atoms (facts) found in the plog file")
             sys.exit(2)
 
-        # Run simulator
-        simulator = WhatIfSimulator(parsed, filename=plog_file)
-
-        if interactive or HAS_TERMINAL_MENU:
+        if interactive:
+            # Interactive mode: run the simulator
+            simulator = WhatIfSimulator(parsed, filename=plog_file)
             simulator.run()
         else:
-            print("\n⚠️  Note: Install 'simple-term-menu' for better interactive experience")
-            print("   pip install simple-term-menu\n")
-            simulator.run()
+            # Non-interactive mode: evaluate and print report, then exit
+            analyzer = PlainEnglishAnalyzer(parsed)
+            report = analyzer.generate_report()
+            print_plain_english_report(report)
+            sys.exit(0 if report.is_consistent else 1)
 
     except FileNotFoundError as e:
         print(f"\n❌ Error: Could not find file - {e}\n")
@@ -792,7 +1072,6 @@ def main():
         import traceback
         traceback.print_exc()
         sys.exit(2)
-
 
 if __name__ == "__main__":
     main()
