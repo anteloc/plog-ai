@@ -65,46 +65,46 @@ ATOM FALLACY_hasty_generalization: "FALLACY: Hasty generalization - Claims ALL s
 # FALLACY: Appeal to Popularity (Argumentum ad Populum)
 # "Everyone knows X" is used to assert X is true
 FORMULA f_appeal_to_popularity: everyone_knows_plan_will_bankrupt_town -> plan_will_bankrupt_town
-FORMULA f_tag_appeal_to_popularity: everyone_knows_plan_will_bankrupt_town -> FALLACY_appeal_to_popularity
+FORMULA f_FALLACY_appeal_to_popularity: everyone_knows_plan_will_bankrupt_town -> FALLACY_appeal_to_popularity
 
 # FALLACY: Slippery Slope
 # Allowing recycling plan will lead to banning cars (no causal mechanism provided)
 FORMULA f_slippery_slope: we_allow_recycling_plan -> next_they_will_ban_cars
-FORMULA f_tag_slippery_slope: (we_allow_recycling_plan -> next_they_will_ban_cars) -> FALLACY_slippery_slope
+FORMULA f_FALLACY_slippery_slope: (we_allow_recycling_plan -> next_they_will_ban_cars) -> FALLACY_slippery_slope
 
 # FALLACY: Ad Hominem Circumstantial + Hasty Generalization
 # Scientists are dismissed because of alleged financial motive, not evidence
 FORMULA f_scientist_bias_claim: scientists_want_grant_money -> scientists_are_all_biased
 FORMULA f_undermined_authority: proposal_backed_by_scientists & scientists_are_all_biased
-FORMULA f_tag_ad_hominem: (scientists_want_grant_money -> scientists_are_all_biased) -> FALLACY_ad_hominem_circumstantial
-FORMULA f_tag_hasty_generalization: scientists_are_all_biased -> FALLACY_hasty_generalization
+FORMULA f_FALLACY_ad_hominem: (scientists_want_grant_money -> scientists_are_all_biased) -> FALLACY_ad_hominem_circumstantial
+FORMULA f_FALLACY_hasty_generalization: scientists_are_all_biased -> FALLACY_hasty_generalization
 
 # FALLACY: Appeal to Inappropriate Authority (Testimonial)
 # Neighbor's honesty is used to validate his policy claim
 FORMULA f_neighbor_honest_therefore_credible: neighbor_is_very_honest_man & neighbor_said_it_is_scam
 FORMULA f_neighbor_claim_accepted: (neighbor_is_very_honest_man & neighbor_said_it_is_scam) -> plan_is_a_scam
-FORMULA f_tag_appeal_to_authority: (neighbor_is_very_honest_man -> plan_is_a_scam) -> FALLACY_appeal_to_authority_testimonial
+FORMULA f_FALLACY_appeal_to_authority: (neighbor_is_very_honest_man -> plan_is_a_scam) -> FALLACY_appeal_to_authority_testimonial
 
 # FALLACY: False Dilemma (Reject or Ruin)
 # Only two options presented: reject the plan OR watch community fall into ruin
 FORMULA f_false_dilemma_ruin: only_alternative_is_ruin -> (we_must_reject_proposal | community_will_fall_into_ruin)
-FORMULA f_tag_false_dilemma_ruin: only_alternative_is_ruin -> FALLACY_false_dilemma_reject_or_ruin
+FORMULA f_FALLACY_false_dilemma_ruin: only_alternative_is_ruin -> FALLACY_false_dilemma_reject_or_ruin
 
 # FALLACY: False Dilemma (Supporters' Motives)
 # Supporters must be EITHER misinformed OR hate local businesses (no other option)
 FORMULA f_supporter_false_dilemma: supporters_are_deeply_misinformed | supporters_secretly_hate_local_businesses
-FORMULA f_tag_supporter_dilemma: (supporters_are_deeply_misinformed | supporters_secretly_hate_local_businesses) -> FALLACY_false_dilemma_supporters
+FORMULA f_FALLACY_supporter_dilemma: (supporters_are_deeply_misinformed | supporters_secretly_hate_local_businesses) -> FALLACY_false_dilemma_supporters
 
 # FALLACY: False Dilemma (Simple Choice Framing)
 # Complex policy reduced to "common sense vs total disaster"
 FORMULA f_simple_choice_claim: this_is_simple_choice -> choice_is_common_sense_vs_disaster
 FORMULA f_binary_framing: choice_is_common_sense_vs_disaster -> (rejecting_plan_is_common_sense & accepting_plan_is_total_disaster)
-FORMULA f_tag_simple_choice: choice_is_common_sense_vs_disaster -> FALLACY_false_dilemma_simple_choice
+FORMULA f_FALLACY_simple_choice: choice_is_common_sense_vs_disaster -> FALLACY_false_dilemma_simple_choice
 
 # FALLACY: False Equivalence
 # Not acting now = already accepted complete downfall of way of life
 FORMULA f_inaction_equals_acceptance: we_do_not_act_now -> we_accepted_downfall_of_way_of_life
-FORMULA f_tag_false_equivalence: (we_do_not_act_now -> we_accepted_downfall_of_way_of_life) -> FALLACY_false_equivalence_inaction
+FORMULA f_FALLACY_false_equivalence: (we_do_not_act_now -> we_accepted_downfall_of_way_of_life) -> FALLACY_false_equivalence_inaction
 
 # Overall argument structure
 FORMULA f_main_claim: new_recycling_plan_exists & plan_will_bankrupt_town

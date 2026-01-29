@@ -20,11 +20,10 @@ Translate the contents in the document attached by the user to propositional log
     * Use python-style naming for variables and formulas, e.g. some_atom_name, f_some_formula
     * Give meaningful names to atoms, e.g. plato_is_a_man
     * Give meaningful descriptions to atoms, e.g. "Plato is a man"
-    * Statements in the text are assumed to be TRUE facts
-    * Thus, atoms are assumed to be TRUE facts, even when the statement is in negative form
+    * Atoms are assumed to be TRUE facts, even when the statement is in negative form
     * Statements in negative form like e.g. "Plato is not an animal" should be converted into atoms like
         * ATOM plato_is_not_an_animal: "Plato is not an animal"
-    * And the same goes with statements with negative-like elements, e.g.:
+    * Same with statements with negative-like elements, e.g.:
         * "A man without a house": should become: 
             * ATOM man_without_house: "A man without a house" 
         * "Some missing pieces": should become
@@ -34,7 +33,15 @@ Translate the contents in the document attached by the user to propositional log
     * Formulae should only contain atoms and operations between them
     * Formulae should be as faithful as possible to the contents on the original text
     * Formulae should capture in detail the main aspects of the text
-    * Detect logical fallacies in the given text and add "FALLACY_" prefix where required in order to tag them.
+    * Detect logical fallacies in the given text and tag them, e.g.:
+```
+ATOM FALLACY_appeal_to_popularity: "FALLACY: Appeal to popularity (argumentum ad populum) - 'Everyone knows' does not establish truth"
+
+# FALLACY: Appeal to Popularity (Argumentum ad Populum)
+# "Everyone knows X" is used to assert X is true
+FORMULA f_appeal_to_popularity: everyone_knows_plan_will_bankrupt_town -> plan_will_bankrupt_town
+FORMULA f_FALLACY_appeal_to_popularity: everyone_knows_plan_will_bankrupt_town -> FALLACY_appeal_to_popularity
+```
 
 * DONT's
     * Negate atoms in the consequent:
@@ -46,7 +53,7 @@ Translate the contents in the document attached by the user to propositional log
         * WRONG:
             * ATOM: plato_is_a_man: "Plato is a man"
             * FORMULA: f_fact_plato_is_a_man: plato_is_a_man
-    * Reference a formula from another formula
+    * Reference a formula(s) from another formula
 
 
 ## STEP 3 - PLOG FORMAT CONVERSION
@@ -58,7 +65,6 @@ Convert the result from previous step into a `logic-results.plog` file, accordin
 Install the required dependencies for running the attached validator script: `plog.py`
 
 ```shell
-python3 -m pip install PyYAML
 python3 -m pip install lark
 python3 -m pip install z3-solver
 ```
@@ -69,10 +75,8 @@ Run the validator script `plog.py` on the `logic-results.plog` from previous ste
 python3 plog.py --grammar ./plog.lark logic-results.plog
 ```
 
-Validation is considered **PASSED** when:
-
-* the script doesn't output any errors 
-* and exits with code 0
+Validation is considered **PASSED** when it exits with code 0 or 1
+Validation is considered **FAILED** when it exits with code 2
 
 ## STEP 5 - ITERATIVE CORRECTION
 
@@ -87,16 +91,16 @@ If the validation from the previous step fails:
 
 Once the `logic-results.plog` file PASSes the validation, make available for the user to download:
 
-* The JSON output from plog.py for the validation execution in a `logic-analysis.json` file
+* The output from plog.py for the validation execution in a `logic-analysis.md` file
 * The `logic-results.plog` file
 
 ## STEP 6 - RESULTS INTERPRETATION
 
-Using plain English, provide an interpretation to the user for the JSON output results.
+Using plain English, provide an interpretation to the user for the output results.
 
 If no inconsistencies or fallacies, output: "Text shows no inconsistencies"
 
-If inconsistencies or fallacies detected, show the user an explanation about:
+If inconsistencies or fallacies detected, show the user a summarized explanation about:
 
 * What things are inconsistent in the text
 * Reason(s) why each one of those are inconsistent
