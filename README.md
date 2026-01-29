@@ -240,8 +240,8 @@ FORMULA f_FALLACY_appeal_to_popularity: everyone_knows_X -> FALLACY_appeal_to_po
   - Fallacy tag formulas (`f_FALLACY_*`) — detection rules
 4. **Fallacy Detection** — Tag formulas are evaluated to find active fallacies
 5. **Consistency Check** — Z3 SAT solver verifies logical consistency:
-   - **SAT** → No contradictions detected
-  - **UNSAT** → Contradiction found; minimal conflict set reported
+    - **SAT** → No contradictions detected
+    - **UNSAT** → Contradiction found; minimal conflict set reported
 6. **Reporting** — Results presented in plain English with:
   - Fallacies listed first (most actionable)
   - Contradictions explained with involved formulas
