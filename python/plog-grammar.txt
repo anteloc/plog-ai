@@ -54,8 +54,8 @@ OR:  "|" | "∨"
 
 NOT: "~" | "¬" | "!"
 
-TRUE: "TRUE" | "True" | "⊤"
-FALSE: "FALSE" | "False" | "⊥"
+TRUE.2: "TRUE" | "True" | "⊤"
+FALSE.2: "FALSE" | "False" | "⊥"
 
 %import common.ESCAPED_STRING
 %import common.WS_INLINE

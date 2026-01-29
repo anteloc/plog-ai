@@ -1,0 +1,36 @@
+# Recycling plan claims
+ATOM everyone_knows_plan_will_bankrupt_town: "Everyone knows the new recycling plan will bankrupt our town"
+ATOM plan_will_bankrupt_town: "The new recycling plan will bankrupt the town"
+ATOM allowing_plan_leads_to_ban_cars: "Allowing the plan will lead to banning cars"
+ATOM scientists_back_plan: "Scientists back the recycling plan"
+ATOM scientists_are_biased_for_grants: "Scientists are biased because they want grant money"
+ATOM neighbor_says_plan_is_scam: "My neighbor says the plan is a scam"
+ATOM neighbor_is_very_honest: "My neighbor is a very honest man"
+ATOM only_alternative_is_community_ruin: "The only alternative is community ruin"
+ATOM supporters_are_misinformed: "Supporters are deeply misinformed"
+ATOM supporters_hate_local_business: "Supporters secretly hate local businesses"
+ATOM choice_common_sense_or_disaster: "This is a choice between common sense and total disaster"
+ATOM not_acting_now_equals_accepting_downfall: "Not acting now equals accepting downfall of our way of life"
+
+# Fallacies
+ATOM FALLACY_appeal_to_popularity: "FALLACY: Appeal to popularity"
+ATOM FALLACY_slippery_slope: "FALLACY: Slippery slope"
+ATOM FALLACY_ad_hominem: "FALLACY: Ad hominem"
+ATOM FALLACY_false_dilemma: "FALLACY: False dilemma"
+ATOM FALLACY_appeal_to_authority: "FALLACY: Appeal to authority"
+
+# Formulae
+FORMULA f_appeal_to_popularity: everyone_knows_plan_will_bankrupt_town -> plan_will_bankrupt_town
+FORMULA f_FALLACY_appeal_to_popularity: everyone_knows_plan_will_bankrupt_town -> FALLACY_appeal_to_popularity
+
+FORMULA f_slippery_slope: plan_will_bankrupt_town -> allowing_plan_leads_to_ban_cars
+FORMULA f_FALLACY_slippery_slope: allowing_plan_leads_to_ban_cars -> FALLACY_slippery_slope
+
+FORMULA f_ad_hominem_scientists: scientists_back_plan -> scientists_are_biased_for_grants
+FORMULA f_FALLACY_ad_hominem: scientists_are_biased_for_grants -> FALLACY_ad_hominem
+
+FORMULA f_appeal_to_authority_neighbor: neighbor_is_very_honest -> neighbor_says_plan_is_scam
+FORMULA f_FALLACY_appeal_to_authority: neighbor_says_plan_is_scam -> FALLACY_appeal_to_authority
+
+FORMULA f_false_dilemma: only_alternative_is_community_ruin -> choice_common_sense_or_disaster
+FORMULA f_FALLACY_false_dilemma: choice_common_sense_or_disaster -> FALLACY_false_dilemma

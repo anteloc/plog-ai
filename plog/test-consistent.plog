@@ -1,0 +1,9 @@
+# Test case: Consistent reasoning (should pass)
+# A valid syllogism about Socrates
+
+ATOM socrates_is_man: "Socrates is a man"
+ATOM all_men_are_mortal: "All men are mortal"
+ATOM socrates_is_mortal: "Socrates is mortal"
+
+# Valid reasoning: If Socrates is a man and all men are mortal, then Socrates is mortal
+FORMULA valid_syllogism: (socrates_is_man & all_men_are_mortal) -> socrates_is_mortal

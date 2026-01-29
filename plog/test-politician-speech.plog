@@ -1,0 +1,14 @@
+# Realistic speech example: A politician making contradictory claims
+# This represents a transcript where someone's statements don't add up
+
+ATOM taxes_will_decrease: "Taxes will decrease for everyone"
+ATOM services_will_improve: "Public services will improve"
+ATOM no_new_borrowing: "There will be no new government borrowing"
+ATOM economy_is_struggling: "The economy is currently struggling"
+
+# Reasoning: If taxes decrease and no borrowing, then services can't improve
+# (less money coming in = less money to spend)
+FORMULA budget_reality: (taxes_will_decrease & no_new_borrowing) -> ~services_will_improve
+
+# But the speaker also promised services WILL improve
+FORMULA service_promise: economy_is_struggling -> services_will_improve

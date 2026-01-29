@@ -1,0 +1,11 @@
+# Test case: Self-contradictory formula
+# The speaker makes a logically impossible statement
+
+ATOM it_is_raining: "It is raining"
+ATOM ground_is_wet: "The ground is wet"
+
+# Valid reasoning
+FORMULA rain_wets_ground: it_is_raining -> ground_is_wet
+
+# Self-contradictory: "It's raining and not raining" - impossible statement
+FORMULA confused_claim: it_is_raining & ~it_is_raining

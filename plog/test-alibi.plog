@@ -1,0 +1,13 @@
+# Realistic speech example: Someone's alibi doesn't add up
+# A person claiming to be in two places at once
+
+ATOM was_at_home: "I was at home all evening"
+ATOM was_at_store: "I went to the store to buy milk"
+ATOM saw_the_accident: "I saw the accident happen downtown"
+ATOM accident_was_at_night: "The accident happened in the evening"
+
+# If you were home all evening, you couldn't have been at the store
+FORMULA home_means_no_store: was_at_home -> ~was_at_store
+
+# If you saw the accident downtown in the evening, you weren't home all evening
+FORMULA saw_accident_not_home: (saw_the_accident & accident_was_at_night) -> ~was_at_home
