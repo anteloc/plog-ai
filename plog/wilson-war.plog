@@ -1,0 +1,78 @@
+# German submarine policy and unrestricted warfare
+ATOM germany_announced_unrestricted_submarine_warfare_feb1_1917: "Germany announced it would use submarines to sink every vessel approaching Allied ports after Feb 1, 1917"
+ATOM germany_put_aside_restraints_of_law_and_humanity: "Germany put aside all restraints of law and humanity in submarine warfare"
+ATOM earlier_promise_not_sink_passenger_boats_and_give_warning: "Germany earlier promised passenger boats would not be sunk and warnings would be given to other vessels"
+ATOM new_policy_swept_every_restriction_aside: "The new policy swept every restriction aside"
+ATOM vessels_of_every_kind_sent_to_bottom_without_warning: "Vessels of every kind have been sent to the bottom without warning"
+ATOM no_help_or_mercy_for_those_on_board: "There was no thought of help or mercy for those on board"
+ATOM friendly_neutral_vessels_sunk_along_with_belligerents: "Vessels of friendly neutrals were sunk along with those of belligerents"
+
+# Noncombatant deaths and moral framing
+ATOM wanton_wholesale_destruction_of_noncombatant_lives: "There is wanton and wholesale destruction of noncombatant lives"
+ATOM noncombatants_engaged_in_innocent_legitimate_pursuits: "Noncombatants were engaged in pursuits deemed innocent and legitimate"
+ATOM property_can_be_paid_for: "Property can be paid for"
+ATOM lives_of_peaceful_innocent_people_cannot_be_paid_for: "The lives of peaceful and innocent people cannot be paid for"
+ATOM submarine_warfare_against_commerce_is_warfare_against_mankind: "German submarine warfare against commerce is a warfare against mankind"
+ATOM submarine_warfare_is_war_against_all_nations: "It is a war against all nations"
+ATOM american_ships_sunk_and_american_lives_taken: "American ships have been sunk and American lives taken"
+ATOM other_neutral_and_friendly_ships_and_people_sunk_in_same_way: "Ships and people of other neutral and friendly nations have been sunk in the same way"
+ATOM challenge_is_to_all_mankind: "The challenge is to all mankind"
+ATOM each_nation_must_decide_how_to_meet_challenge: "Each nation must decide for itself how it will meet the challenge"
+FORMULA f_unrestricted_policy_implies_no_warning: new_policy_swept_every_restriction_aside -> vessels_of_every_kind_sent_to_bottom_without_warning
+FORMULA f_no_warning_implies_noncombatant_deaths: vessels_of_every_kind_sent_to_bottom_without_warning -> wanton_wholesale_destruction_of_noncombatant_lives
+FORMULA f_lives_not_payable_supports_moral_weight: lives_of_peaceful_innocent_people_cannot_be_paid_for -> submarine_warfare_against_commerce_is_warfare_against_mankind
+FORMULA f_warfare_against_mankind_implies_challenge_all: submarine_warfare_against_commerce_is_warfare_against_mankind -> challenge_is_to_all_mankind
+
+# Motive: vindication of right, not revenge
+ATOM motive_not_revenge: "The U.S. motive will not be revenge"
+ATOM motive_not_victorious_assertion_of_physical_might: "The motive will not be the victorious assertion of physical might"
+ATOM motive_is_vindication_of_right_and_human_right: "The motive is the vindication of right and human right"
+ATOM us_is_single_champion_of_human_right: "The U.S. is only a single champion of human right"
+FORMULA f_not_revenge_implies_vindication: motive_not_revenge & motive_not_victorious_assertion_of_physical_might -> motive_is_vindication_of_right_and_human_right
+
+# Accepting belligerent status
+ATOM step_is_solemn_and_tragical: "The step of entering war is solemn and tragical"
+ATOM us_should_formally_accept_belligerent_status_thrust_upon_it: "The U.S. should formally accept the status of belligerent thrust upon it"
+
+# Spies, intrigues, and hostile purpose
+ATOM prussian_autocracy_filled_communities_and_offices_with_spies: "The Prussian autocracy filled U.S. communities and offices with spies"
+ATOM prussian_autocracy_set_criminal_intrigues_against_national_unity: "The Prussian autocracy set criminal intrigues against U.S. national unity"
+ATOM intercepted_note_to_german_minister_in_mexico_is_evidence: "An intercepted note to the German Minister in Mexico City is evidence of hostile purpose"
+ATOM germany_means_to_stir_up_enemies_at_our_doors: "Germany means to stir up enemies against the U.S. at its very doors"
+ATOM such_government_can_never_be_a_friend: "Such a government can never be a friend"
+ATOM organized_power_threatens_security_of_democratic_governments: "Its organized power means there can be no assured security for democratic governments"
+FORMULA f_spies_imply_not_friend: prussian_autocracy_filled_communities_and_offices_with_spies & prussian_autocracy_set_criminal_intrigues_against_national_unity -> such_government_can_never_be_a_friend
+FORMULA f_mexico_note_implies_enemies_at_doors: intercepted_note_to_german_minister_in_mexico_is_evidence -> germany_means_to_stir_up_enemies_at_our_doors
+FORMULA f_hostile_purpose_implies_not_friend: germany_means_to_stir_up_enemies_at_our_doors -> such_government_can_never_be_a_friend
+FORMULA f_not_friend_implies_threat_to_democracies: such_government_can_never_be_a_friend -> organized_power_threatens_security_of_democratic_governments
+
+# War aims: peace, liberation, democracy
+ATOM us_accepts_challenge_of_hostile_purpose: "The U.S. accepts the challenge of hostile purpose"
+ATOM us_will_spend_whole_force_if_necessary_to_check_pretensions_and_power: "The U.S. will, if necessary, spend the whole force of the nation to check and nullify its pretensions and power"
+ATOM fight_for_ultimate_peace_of_world: "The U.S. fights for the ultimate peace of the world"
+ATOM fight_for_liberation_of_peoples_including_germans: "The U.S. fights for the liberation of peoples, including the German peoples"
+ATOM fight_for_rights_of_nations_great_and_small: "The U.S. fights for the rights of nations great and small"
+ATOM fight_for_privilege_to_choose_way_of_life_and_obedience: "The U.S. fights for the privilege of men everywhere to choose their way of life and of obedience"
+ATOM world_must_be_made_safe_for_democracy: "The world must be made safe for democracy"
+ATOM civilization_seems_in_balance: "Civilization itself seems to be in the balance"
+ATOM right_more_precious_than_peace: "Right is more precious than peace"
+ATOM fight_for_voice_in_government_for_those_under_authority: "Fight for the right of those who submit to authority to have a voice in their own governments"
+ATOM fight_for_rights_and_liberties_of_small_nations: "Fight for the rights and liberties of small nations"
+ATOM aim_universal_dominion_of_right_by_concert_of_free_peoples: "Aim for a universal dominion of right by a concert of free peoples"
+ATOM aim_bring_peace_and_safety_to_all_nations_and_make_world_free: "Aim to bring peace and safety to all nations and make the world free"
+ATOM america_privileged_to_spend_blood_and_might_for_principles: "America is privileged to spend blood and might for the principles that gave her birth and happiness and treasured peace"
+ATOM god_helping_america_can_do_no_other: "God helping her, America can do no other"
+FORMULA f_threat_to_democracies_implies_accept_challenge: organized_power_threatens_security_of_democratic_governments -> us_accepts_challenge_of_hostile_purpose
+FORMULA f_accept_challenge_implies_force_if_needed: us_accepts_challenge_of_hostile_purpose -> us_will_spend_whole_force_if_necessary_to_check_pretensions_and_power
+FORMULA f_fight_for_right_implies_safe_for_democracy: right_more_precious_than_peace -> world_must_be_made_safe_for_democracy
+
+# Detected fallacy tags (rhetorical patterns)
+ATOM FALLACY_hasty_generalization: "FALLACY: Hasty generalization - a broad moral conclusion is drawn from a set of actions without fully establishing scope/necessity"
+ATOM FALLACY_appeal_to_emotion: "FALLACY: Appeal to emotion - emotional language about innocent deaths is used to strengthen the conclusion"
+ATOM FALLACY_appeal_to_religion: "FALLACY: Appeal to religion - invoking God as support for a political conclusion"
+FORMULA f_hasty_generalization: vessels_of_every_kind_sent_to_bottom_without_warning -> submarine_warfare_against_commerce_is_warfare_against_mankind
+FORMULA f_FALLACY_hasty_generalization: vessels_of_every_kind_sent_to_bottom_without_warning -> FALLACY_hasty_generalization
+FORMULA f_emotion_to_war: wanton_wholesale_destruction_of_noncombatant_lives -> us_should_formally_accept_belligerent_status_thrust_upon_it
+FORMULA f_FALLACY_appeal_to_emotion: wanton_wholesale_destruction_of_noncombatant_lives -> FALLACY_appeal_to_emotion
+FORMULA f_religion_to_necessity: god_helping_america_can_do_no_other -> us_should_formally_accept_belligerent_status_thrust_upon_it
+FORMULA f_FALLACY_appeal_to_religion: god_helping_america_can_do_no_other -> FALLACY_appeal_to_religion

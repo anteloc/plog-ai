@@ -1,0 +1,129 @@
+# Speaker and context
+ATOM speaker_is_jane_doe_eu: "Speaker is Mrs. Jane Doe representing the European Union and its Member States"
+ATOM speech_is_shortened_version: "Speaker reads a shortened version and will submit full version in writing"
+ATOM process_was_unique_opportunity: "The process was a unique opportunity to reinvigorate multilateralism and turbocharge the SDGs"
+ATOM process_aimed_to_rebuild_trust_and_overcome_polarization: "The process aimed to rebuild trust and overcome polarization"
+ATOM co_facilitators_and_collective_efforts_succeeded: "Co-facilitators, leadership, and collective efforts succeeded in seeking ambition and compromise"
+ATOM summit_reaffirmed_commitment_to_multilateralism_with_un_at_center: "Summit reaffirmed commitment to multilateralism with the UN at its centre"
+
+# Adoption of key outcomes
+ATOM pact_for_future_adopted: "Pact for the Future (resolution 79/1) was adopted"
+ATOM global_digital_compact_adopted: "Global Digital Compact was adopted"
+ATOM declaration_future_generations_adopted: "Declaration on Future Generations was adopted"
+ATOM outcomes_commit_to_comprehensive_actions: "Adopted outcomes commit to a comprehensive set of actions"
+FORMULA f_adoption_implies_comprehensive_actions: pact_for_future_adopted & global_digital_compact_adopted & declaration_future_generations_adopted -> outcomes_commit_to_comprehensive_actions
+
+# Reform, UN Charter, and international law
+ATOM reform_needed_effective_representative_system: "Reform is needed to make the system more effective and representative of today's realities"
+ATOM eu_ready_to_walk_through_unlocked_door: "The EU stands ready to jointly walk through the unlocked door of reform"
+ATOM pact_recommits_un_charter_and_international_law: "The Pact recommits to the UN Charter and international law including international humanitarian law"
+ATOM un_pillars_are_interrelated: "UN pillars are interrelated: peace and security, sustainable development, and human rights"
+ATOM charter_and_law_are_foundation_for_un_work: "UN Charter and international law are the foundation for work across UN pillars"
+FORMULA f_pact_recommitment_implies_foundation: pact_recommits_un_charter_and_international_law -> charter_and_law_are_foundation_for_un_work
+FORMULA f_foundation_supports_pillars: charter_and_law_are_foundation_for_un_work -> un_pillars_are_interrelated
+
+# Upholding commitments, aggression, prevention, and peace operations
+ATOM call_to_uphold_commitments_faithfully: "Call on all to uphold commitments faithfully now more than ever"
+ATOM call_to_condemn_acts_of_aggression: "Call to condemn acts of aggression"
+ATOM aim_make_world_safer_address_complex_crises: "Aim to make the world safer and address increasingly complex crises"
+ATOM endeavour_address_root_causes_through_prevention: "Endeavour to address root causes of conflict notably through prevention"
+ATOM develop_national_prevention_strategies: "Develop national prevention strategies"
+ATOM reform_security_council: "Reform the Security Council"
+ATOM adapt_un_peace_operations: "Adapt United Nations peace operations"
+ATOM accelerate_women_peace_security_agenda: "Accelerate the women and peace and security agenda"
+ATOM follow_up_on_pact_implementation: "Follow up on Pact implementation"
+ATOM call_for_ambition_in_follow_up: "Call on all to be ambitious in follow-up"
+FORMULA f_uphold_commitments_supports_condemn_aggression: call_to_uphold_commitments_faithfully -> call_to_condemn_acts_of_aggression
+FORMULA f_complex_crises_imply_prevention: aim_make_world_safer_address_complex_crises -> endeavour_address_root_causes_through_prevention
+FORMULA f_prevention_implies_national_strategies: endeavour_address_root_causes_through_prevention -> develop_national_prevention_strategies
+FORMULA f_prevention_implies_institutional_reforms: endeavour_address_root_causes_through_prevention -> reform_security_council & adapt_un_peace_operations & accelerate_women_peace_security_agenda
+
+# Cybersecurity, mis/disinformation, and climate as threat amplifier
+ATOM new_threats_cybersecurity: "New threats lie ahead in the area of cybersecurity"
+ATOM new_threats_mis_and_disinformation: "New threats lie ahead in the fight against mis- and disinformation"
+ATOM must_act_with_greater_comprehensiveness: "We must act with greater comprehensiveness"
+ATOM climate_change_is_threat_amplifier: "Climate change is a threat amplifier"
+ATOM disappointed_deletion_climate_peace_security_action: "EU was disappointed with deletion of action on climate peace and security"
+ATOM remain_committed_move_forward_climate_peace_security: "EU remains committed to move forward on climate peace and security agenda"
+FORMULA f_new_threats_imply_comprehensive_action: new_threats_cybersecurity & new_threats_mis_and_disinformation -> must_act_with_greater_comprehensiveness
+FORMULA f_threat_amplifier_supports_comprehensive_action: climate_change_is_threat_amplifier -> must_act_with_greater_comprehensiveness
+
+# Sustainable development and climate commitments
+ATOM climate_crucial_challenge_present_future_generations: "Climate is a crucial challenge for present and future generations"
+ATOM short_term_vision_or_backtracking_not_option: "Short-term vision or backtracking was no option"
+ATOM reaffirm_paris_agreement: "Reaffirm the Paris Agreement"
+ATOM recommit_uae_consensus_transition_away_from_fossil_fuels: "Recommit to the UAE consensus including pledge to transition away from fossil fuels"
+ATOM slow_progress_includes_environmental_degradation: "Slow pace of progress includes tackling environmental degradation"
+ATOM strengthen_synergies_in_environmental_governance: "Strengthen and build synergies in international environmental governance"
+ATOM common_but_differentiated_responsibilities_in_climate_context: "Common but differentiated responsibilities are reflected in the strict context of climate action"
+ATOM digital_tech_unlock_opportunities_for_environmental_sustainability: "Digital technologies unlock new capabilities and opportunities for advancing environmental sustainability"
+ATOM must_focus_on_environmental_impacts_of_digitalization: "Must place greater focus on environmental impacts of digitalization"
+ATOM sustainable_development_three_dimensions_goal_for_all_countries: "Sustainable development in its three dimensions is a central goal that applies to all countries"
+ATOM leave_no_one_behind_is_central_objective: "Leaving no one behind is a central objective of all Member States and multilateralism"
+FORMULA f_climate_challenge_implies_paris: climate_crucial_challenge_present_future_generations -> reaffirm_paris_agreement
+FORMULA f_paris_implies_transition: reaffirm_paris_agreement -> recommit_uae_consensus_transition_away_from_fossil_fuels
+FORMULA f_digital_sustainability_implies_env_focus: digital_tech_unlock_opportunities_for_environmental_sustainability -> must_focus_on_environmental_impacts_of_digitalization
+
+# SDGs and international financial architecture reform
+ATOM spare_no_effort_accelerate_sdgs: "EU will spare no effort accelerating achievement of the SDGs"
+ATOM welcome_ambition_reform_international_financial_architecture: "EU welcomes ambition to accelerate reform of the international financial architecture"
+ATOM support_voice_representation_developing_countries: "EU will support strengthening the voice and representation of developing countries"
+ATOM mobilize_additional_financing_for_most_in_need: "EU will mobilize additional financing responding to those most in need"
+ATOM support_sustainable_borrowing_for_developing_countries: "EU will support developing countries to borrow sustainably for long-term development"
+ATOM welcome_imf_review_sovereign_debt_architecture: "Welcome call for IMF review to strengthen and improve sovereign debt architecture"
+ATOM review_builds_on_existing_processes_and_all_stakeholders: "Review should build on existing international processes and engage all relevant stakeholders"
+ATOM un_role_in_global_economic_governance: "UN has an important role to play in global economic governance"
+ATOM coordination_with_ifis_crucial: "Coordination with international financial institutions is crucial for a more just and fit-for-purpose global system"
+FORMULA f_sdgs_imply_finance_reform_support: spare_no_effort_accelerate_sdgs -> welcome_ambition_reform_international_financial_architecture
+FORMULA f_finance_reform_implies_support_developing_voice: welcome_ambition_reform_international_financial_architecture -> support_voice_representation_developing_countries
+FORMULA f_support_voice_implies_mobilize_financing: support_voice_representation_developing_countries -> mobilize_additional_financing_for_most_in_need
+FORMULA f_imf_review_implies_stakeholder_engagement: welcome_imf_review_sovereign_debt_architecture -> review_builds_on_existing_processes_and_all_stakeholders
+FORMULA f_un_role_implies_coordination: un_role_in_global_economic_governance -> coordination_with_ifis_crucial
+
+# Digital issues and AI governance
+ATOM gdc_significant_step_bridging_digital_divides: "Global Digital Compact is a significant step toward bridging digital divides within and between countries"
+ATOM look_forward_innovative_voluntary_financing_ai_capacity_building: "Look forward to proposals for innovative voluntary financing for AI capacity-building"
+ATOM global_ai_fund_is_one_potential_option: "A global fund on AI is only one potential option"
+ATOM caution_avoid_duplicate_efforts_in_follow_up: "Call for caution to avoid duplicating efforts in follow-up and review"
+ATOM avoid_duplication_other_forums_geneva_igf: "Avoid duplicating conversations in other forums notably Geneva and the Internet Governance Forum"
+ATOM ensure_complementarity_and_synergies_across_spaces: "Ensure complementarity and synergies across spaces and proposals"
+ATOM establish_independent_international_scientific_panel_ai: "Establish an independent international scientific panel on AI"
+ATOM create_global_dialogue_ai_governance: "Create a global dialogue on AI governance"
+FORMULA f_gdc_implies_bridge_divides: global_digital_compact_adopted -> gdc_significant_step_bridging_digital_divides
+FORMULA f_followup_caution_implies_avoid_duplication: caution_avoid_duplicate_efforts_in_follow_up -> avoid_duplication_other_forums_geneva_igf
+FORMULA f_avoid_duplication_implies_synergies: avoid_duplication_other_forums_geneva_igf -> ensure_complementarity_and_synergies_across_spaces
+
+# Human rights, OHCHR, and multi-stakeholder approach
+ATOM recommit_universal_indivisible_human_rights: "Recommit to universal and indivisible human rights reflected throughout the Pact"
+ATOM human_rights_development_peace_interdependent: "Human rights, sustainable development, and peace and security are deeply interdependent"
+ATOM protect_all_rights_prerequisite_for_wellbeing: "Promoting and protecting all human rights is a prerequisite for improving wellbeing and development"
+ATOM right_to_development_is_individual_right: "Right to development is approached as an individual right enabling development of an individual"
+ATOM ohchr_crucial_role_in_gdc_implementation: "OHCHR has a crucial role in implementing the Global Digital Compact"
+ATOM human_rights_must_be_embedded_in_new_entities: "Human rights must be meaningfully embedded in set-up of new entities"
+ATOM multi_stakeholder_approach_must_be_embedded: "Multi-stakeholder approach must be meaningfully embedded in set-up of new entities"
+ATOM welcome_sg_written_assessment_on_ohchr_financing: "Welcome the Secretary-General's written assessment on financing of OHCHR"
+ATOM invite_sg_present_findings_with_budget_proposals: "Invite the Secretary-General to present findings including concrete budget proposals"
+FORMULA f_recommit_hr_implies_interdependence: recommit_universal_indivisible_human_rights -> human_rights_development_peace_interdependent
+FORMULA f_gdc_implies_ohchr_role: global_digital_compact_adopted -> ohchr_crucial_role_in_gdc_implementation
+FORMULA f_ohchr_role_implies_hr_embedded: ohchr_crucial_role_in_gdc_implementation -> human_rights_must_be_embedded_in_new_entities & multi_stakeholder_approach_must_be_embedded
+FORMULA f_welcome_assessment_implies_invite_findings: welcome_sg_written_assessment_on_ohchr_financing -> invite_sg_present_findings_with_budget_proposals
+
+# Gender equality, family forms, and SRH
+ATOM need_greater_gender_equality: "Need for greater gender equality is emphasized across the Pact"
+ATOM strive_full_equal_meaningful_participation_of_women: "Strive for full, equal and meaningful participation of women across forums and processes"
+ATOM various_family_forms_exist_across_systems: "Various forms of family exist across different cultural, political, and social systems"
+ATOM family_forms_must_be_compatible_with_gender_equality_and_childrens_rights: "Family forms must be respectful of and compatible with gender equality and children's rights"
+ATOM uphold_universal_access_sexual_reproductive_health_for_all: "Ambition to ensure universal access to sexual and reproductive health for all must be upheld"
+ATOM uphold_srh_for_youth_and_future_generations: "Universal access to sexual and reproductive health must be upheld for youth and future generations"
+FORMULA f_gender_equality_implies_participation: need_greater_gender_equality -> strive_full_equal_meaningful_participation_of_women
+FORMULA f_family_forms_imply_compatibility_requirement: various_family_forms_exist_across_systems -> family_forms_must_be_compatible_with_gender_equality_and_childrens_rights
+FORMULA f_universal_srh_implies_youth_future: uphold_universal_access_sexual_reproductive_health_for_all -> uphold_srh_for_youth_and_future_generations
+
+# Multi-stakeholder engagement and conclusion
+ATOM thank_sg_for_convening_action_days: "Express thanks to the Secretary-General for convening Summit of the Future action days"
+ATOM action_days_showcase_working_with_youth_civil_society_academia_tech_private_sector: "Action days showcased working with youth, civil society, academia, technical community and private sector"
+ATOM stakeholder_role_indispensable_for_implementation: "Stakeholder roles are indispensable for implementing the Pact and annexes"
+ATOM eu_committed_to_compromise_and_cooperation: "EU stands committed to continuing efforts to find compromise and cooperate across continents"
+ATOM owe_people_rebuild_trust_and_give_new_hope: "We owe it to our people to rebuild trust among us and give new hope"
+FORMULA f_action_days_imply_stakeholder_indispensable: action_days_showcase_working_with_youth_civil_society_academia_tech_private_sector -> stakeholder_role_indispensable_for_implementation
+FORMULA f_succeeded_implies_rebuild_trust: co_facilitators_and_collective_efforts_succeeded -> owe_people_rebuild_trust_and_give_new_hope

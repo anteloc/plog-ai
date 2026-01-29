@@ -2,12 +2,17 @@
 
 Translate the attached document specified by the user into propositional logic statements in .plog format for further text analysis by other software tooling.
 
+Do not output the thinking process to the user, just:
+* The current step you are working on
+* If the analysis process has been successful or not
+* The end result of it, as detailed on STEP 6 and 7
+
 # STEPS
 
 ## STEP 1 - PREPARATION
 
 Analyze **in detail** the following attachments:
-- `plog.lark`: grammar definition, defines the .plog format
+- `plog-grammar.txt`: lark grammar definition, defines the .plog format
 - the attached document provided by the user
 
 
@@ -16,7 +21,7 @@ Analyze **in detail** the following attachments:
 Translate the contents in the document attached by the user to propositional logic.
 
 * DO's:
-    * Use the symbol set defined in `plog.lark`
+    * Use the symbol set defined in `plog-grammar.txt`
     * Use python-style naming for variables and formulas, e.g. some_atom_name, f_some_formula
     * Give meaningful names to atoms, e.g. plato_is_a_man
     * Give meaningful descriptions to atoms, e.g. "Plato is a man"
@@ -33,7 +38,12 @@ Translate the contents in the document attached by the user to propositional log
     * Formulae should only contain atoms and operations between them
     * Formulae should be as faithful as possible to the contents on the original text
     * Formulae should capture in detail the main aspects of the text
-    * Detect logical fallacies in the given text and tag them, e.g.:
+    * Detect logical fallacies in the given text and tag them:
+        * Prefix fallacy atoms with: FALLACY_
+        * Prefix fallacy formulas with: f_FALLACY_
+    
+Fallacies tagging example:
+
 ```
 ATOM FALLACY_appeal_to_popularity: "FALLACY: Appeal to popularity (argumentum ad populum) - 'Everyone knows' does not establish truth"
 
@@ -58,7 +68,9 @@ FORMULA f_FALLACY_appeal_to_popularity: everyone_knows_plan_will_bankrupt_town -
 
 ## STEP 3 - PLOG FORMAT CONVERSION
 
-Convert the result from previous step into a `logic-results.plog` file, according to `plog.lark` grammar definition.
+Convert the result from previous step into a `logic-results.plog` file, according to `plog-grammar.txt` grammar definition.
+
+Add one-line "#..." comments to split into sections, according to the different matters discussed in the text.
 
 ## STEP 4 - END RESULT VALIDATION
 
@@ -72,7 +84,7 @@ python3 -m pip install z3-solver
 Run the validator script `plog.py` on the `logic-results.plog` from previous step with the following options:
 
 ```shell
-python3 plog.py --grammar ./plog.lark logic-results.plog
+python3 plog.py --grammar ./plog-grammar.txt logic-results.plog
 ```
 
 Validation results:
@@ -88,14 +100,14 @@ If validation from the previous step fails:
 3. If parsing error reported, review and correct `logic-results.plog`
 4. Go back to the previous step and re-run the validator script
 
-## STEP 5 - DELIVERABLES
+## STEP 6 - DELIVERABLES
 
 Once the `logic-results.plog` file PASSESS the validation, make available for the user to download:
 
 * The output from plog.py for the validation execution in a `logic-analysis.md` file
 * The `logic-results.plog` file
 
-## STEP 6 - RESULTS INTERPRETATION
+## STEP 7 - RESULTS INTERPRETATION
 
 Using plain English, provide an interpretation to the user for the output results.
 

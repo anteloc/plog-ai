@@ -58,7 +58,7 @@ Follow the attached instructions and process the attached document named <your d
 
 3. Attach the following files:
 - Your document to analyze (`.md` format recommended)
-- `python/plog.lark` — Grammar specification
+- `python/plog-grammar.txt` — Grammar specification
 - `python/plog.py` — Validation script
 - `prompts/instructions.md` - Analysis process instructions
 
@@ -175,16 +175,16 @@ The author uses flawed reasoning techniques to persuade.
 
 ```
 plog-ai/
-├── python/
-│   ├── plog.py  # Main tool: parser, Z3 translator, analyzer, simulator
-│   └── plog.lark          # Grammar specification for .plog format
-├── prompts/
-│   ├── instructions-pred-logic.md   # AI instructions (predicate logic)
-│   └── instructions-prop-logic.md   # AI instructions (propositional logic)
 ├── plog/                # Example .plog files
 │   ├── mlk-war-pred.plog
+│   ├── test-*.plog
 │   ├── un-speech-pred.plog
 │   └── ...
+├── prompts/
+│   ├── instructions.md   # AI instructions prompt 
+├── python/
+│   ├── plog.py  # Main tool: parser, Z3 translator, analyzer, simulator
+│   └── plog-grammar.txt          # Grammar specification for .plog format
 └── texts/               # Example source documents
    ├── mlk-war.md
    ├── un-speech.md
@@ -232,7 +232,7 @@ FORMULA f_FALLACY_appeal_to_popularity: everyone_knows_X -> FALLACY_appeal_to_po
 ## How It Works
 
 1. **Translation** — An LLM reads your document and converts statements into `.plog` format
-2. **Parsing** — Lark parser validates syntax against `plog.lark` grammar
+2. **Parsing** — Lark parser validates syntax against `plog-grammar.txt` grammar
 3. **Categorization** — Items are separated into:
   - Regular atoms (facts) — assumed TRUE
   - Regular formulas (reasoning) — logical connections
@@ -253,10 +253,13 @@ The `plog/` directory contains analyzed examples:
 
 | File | Description |
 |------|-------------|
-| `mlk-war-pred.plog` | MLK's "Declaration of Independence from the War in Vietnam" |
+| `fallacies-example.plog` | Common logical fallacies demonstration |
+| `mlk-war.plog` | MLK's "Declaration of Independence from the War in Vietnam" |
+| `sojourner-aint-woman.plog` | Sojourner Truth's "Ain't I a Woman?" |
+| `test-*.plog` | Different test cases |
 | `un-speech-pred.plog` | UN General Assembly speech analysis |
-| `sojourner-aint-woman-pred.plog` | Sojourner Truth's "Ain't I a Woman?" |
-| `fallacies-example-pred.plog` | Common logical fallacies demonstration |
+| `wilson-war.plog` | Woodrow Wilson, "War Message" |
+
 
 ## Limitations
 

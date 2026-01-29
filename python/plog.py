@@ -214,7 +214,7 @@ class PlogParser:
 
     def __init__(self, grammar_path: str = None):
         if grammar_path is None:
-            grammar_path = Path(__file__).parent / 'plog.lark'
+            grammar_path = Path(__file__).parent / 'plog-grammar.txt'
         with open(grammar_path, 'r') as f:
             grammar = f.read()
         self.lark_parser = Lark(grammar, parser='earley', start='start')
@@ -1082,11 +1082,11 @@ def main():
     formatter_class=argparse.RawDescriptionHelpFormatter,
     epilog="""Examples:
  python plog.py <plog_file>                  # Run analysis
- python plog.py --grammar ./some-grammar.lark <plog_file>  # Run analysis with a specific grammar
+ python plog.py --grammar ./some-grammar.txt <plog_file>  # Run analysis with a specific grammar
  python plog.py --interactive <plog_file>    # Interactive mode"""
     )
     ap.add_argument("file", help="Path to .plog file")
-    ap.add_argument("--grammar", "-g", default=None, help="Path to a lark grammar (default: plog.lark on same dir as script)")
+    ap.add_argument("--grammar", "-g", default=None, help="Path to a lark grammar (default: plog-grammar.txt on same dir as script)")
     ap.add_argument("--interactive", "-i", action="store_true",
                     help="Run in interactive mode with menu for toggling atoms and formulas.")
     args = ap.parse_args()
@@ -1099,12 +1099,12 @@ def main():
 
     # Locate grammar file if not provided
     if grammar_path is None:
-        grammar_file = Path(script_dir) / "plog.lark"
+        grammar_file = Path(script_dir) / "plog-grammar.txt"
     else:
         grammar_file = Path(grammar_path)
         
     if not grammar_file.exists():
-        print(f"❌ Error: Could not find plog.lark grammar file at: {grammar_file}")
+        print(f"❌ Error: Could not find plog-grammar.txt grammar file at: {grammar_file}")
         sys.exit(2)
 
     try:

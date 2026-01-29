@@ -1,0 +1,159 @@
+# Speaker, audience, and purpose
+ATOM speaker_is_dr_king: "The speaker is Dr. King"
+ATOM speech_addressed_to_fellow_americans: "The speech is addressed to fellow Americans"
+ATOM speech_not_addressed_to_hanoi_or_nlf: "The speech is not addressed to Hanoi or the NLF"
+ATOM people_question_why_speak_about_war: "People question why Dr. King speaks about the war"
+ATOM critics_claim_peace_and_civil_rights_dont_mix: "Critics claim peace and civil rights don't mix"
+ATOM critics_claim_speaking_hurts_civil_rights_cause: "Critics claim speaking about the war hurts the cause of Black people"
+ATOM king_says_questions_show_misunderstanding: "King says such questions show misunderstanding of him and the world"
+ATOM king_makes_passionate_plea_to_beloved_nation: "King makes a passionate plea to his beloved nation"
+
+# Moral responsibility and commitment
+ATOM americans_bear_greatest_responsibility_to_end_conflict: "Americans bear the greatest responsibility in ending the Vietnam conflict"
+ATOM conflicts_require_trustful_give_and_take: "Conflicts are never resolved without trustful give and take on both sides"
+ATOM north_vietnam_and_nlf_may_suspect_us_good_faith: "North Vietnam and the NLF may have justifiable reasons to suspect U.S. good faith"
+ATOM king_is_preacher_by_trade: "King is a preacher by trade"
+ATOM king_has_seven_major_reasons_to_oppose_war: "King has seven major reasons for bringing Vietnam into his moral vision"
+
+# War and poverty program
+ATOM poverty_program_promised_hope_for_poor_black_and_white: "The Poverty Program promised hope for the poor, both Black and white"
+ATOM vietnam_build_up_broke_and_eviscerated_poverty_program: "The Vietnam build-up broke and eviscerated the Poverty Program"
+ATOM vietnam_draws_men_skills_money_like_suction_tube: "Vietnam draws men, skills, and money like a destructive suction tube"
+ATOM america_wont_fund_rehabilitation_while_war_continues: "America will not invest necessary funds and energies in rehabilitating the poor while Vietnam continues"
+ATOM war_is_enemy_of_poor: "The war is an enemy of the poor"
+FORMULA f_build_up_eviscerates_poverty_program: vietnam_build_up_broke_and_eviscerated_poverty_program -> war_is_enemy_of_poor
+FORMULA f_war_diverts_resources_from_poor: vietnam_draws_men_skills_money_like_suction_tube -> america_wont_fund_rehabilitation_while_war_continues
+FORMULA f_no_investment_means_enemy_of_poor: america_wont_fund_rehabilitation_while_war_continues -> war_is_enemy_of_poor
+
+# Disproportionate burden and cruel irony
+ATOM war_sends_poor_sons_brothers_husbands_to_die_disproportionately: "The war sends the sons, brothers, and husbands of the poor to fight and die in extraordinarily high proportions"
+ATOM young_black_men_crippled_by_society_sent_far_away: "Young Black men crippled by society are sent far away to fight"
+ATOM they_fight_for_liberties_abroad_not_found_at_home: "They fight for liberties abroad that they have not found at home"
+ATOM black_and_white_boys_kill_and_die_together_for_segregated_nation: "Black and white boys kill and die together for a nation that cannot seat them together in the same schools"
+ATOM soldiers_burn_huts_of_poor_village: "Soldiers burn the huts of a poor village"
+ATOM soldiers_would_not_live_on_same_block_at_home: "Those soldiers would not live on the same block at home"
+ATOM king_could_not_be_silent_about_cruel_manipulation_of_poor: "King could not be silent about cruel manipulation of the poor"
+FORMULA f_disproportionate_death_supports_enemy_of_poor: war_sends_poor_sons_brothers_husbands_to_die_disproportionately -> war_is_enemy_of_poor
+FORMULA f_cruel_irony_supports_speaking_out: black_and_white_boys_kill_and_die_together_for_segregated_nation -> king_could_not_be_silent_about_cruel_manipulation_of_poor
+
+# Violence, nonviolence, and government responsibility
+ATOM king_advocates_nonviolent_social_change: "King advocates that social change comes most meaningfully through non-violent action"
+ATOM king_tells_ghetto_youth_weapons_wont_solve_problems: "King tells ghetto youth that Molotov cocktails and rifles will not solve their problems"
+ATOM ghetto_youth_ask_about_vietnam_and_national_violence: "Ghetto youth ask about Vietnam and whether the nation uses violence to solve problems"
+ATOM us_is_greatest_purveyor_of_violence_today: "The U.S. government is the greatest purveyor of violence in the world today"
+ATOM king_must_speak_to_government_violence_before_condemning_oppressed_violence: "King must speak clearly against government violence before raising his voice against the violence of the oppressed"
+FORMULA f_questions_hit_home: ghetto_youth_ask_about_vietnam_and_national_violence -> king_must_speak_to_government_violence_before_condemning_oppressed_violence
+FORMULA f_purveyor_implies_need_to_speak: us_is_greatest_purveyor_of_violence_today -> king_must_speak_to_government_violence_before_condemning_oppressed_violence
+
+# Civil rights and saving America's soul
+ATOM sclc_motto_save_soul_of_america: "SCLC motto is to save the soul of America"
+ATOM america_not_free_unless_descendants_of_slaves_loosed_from_shackles: "America will not be free unless descendants of slaves are loosed from the shackles they still wear"
+ATOM no_one_concerned_for_america_can_ignore_vietnam_war: "No one concerned for America's integrity and life can ignore the Vietnam war"
+ATOM if_americas_soul_poisoned_autopsy_reads_vietnam: "If America's soul becomes totally poisoned, part of the autopsy must read Vietnam"
+ATOM america_cannot_be_saved_while_destroying_hopes_world_over: "America cannot be saved while it destroys the deepest hopes of people the world over"
+FORMULA f_concern_implies_no_ignore: no_one_concerned_for_america_can_ignore_vietnam_war -> speech_addressed_to_fellow_americans
+FORMULA f_poisoned_soul_points_to_vietnam: if_americas_soul_poisoned_autopsy_reads_vietnam -> america_cannot_be_saved_while_destroying_hopes_world_over
+
+# Religious calling and peace
+ATOM nobel_prize_commission_to_work_for_brotherhood_of_man: "The Nobel Peace Prize is a commission to work harder for the brotherhood of man"
+ATOM ministry_of_jesus_requires_loving_enemies: "Ministry in obedience to Jesus requires loving enemies"
+ATOM good_news_meant_for_all_men: "The good news is meant for all men across ideologies and races"
+ATOM minister_should_share_life_not_threaten_enemies: "A faithful minister should share his life rather than threaten enemies with death"
+FORMULA f_calling_beyond_allegiances: nobel_prize_commission_to_work_for_brotherhood_of_man -> minister_should_share_life_not_threaten_enemies
+FORMULA f_loving_enemies_implies_share_life: ministry_of_jesus_requires_loving_enemies -> minister_should_share_life_not_threaten_enemies
+
+# Vietnamese people and history of U.S. involvement
+ATOM vietnamese_people_under_curse_of_war_three_decades: "Vietnamese people have lived under the curse of war for almost three continuous decades"
+ATOM vietnam_declared_independence_1945: "Vietnam proclaimed independence in 1945 after French and Japanese occupation"
+ATOM vietnam_quoted_us_declaration_of_independence: "Vietnam quoted the U.S. Declaration of Independence in its own freedom document"
+ATOM us_refused_to_recognize_vietnam_independence: "The U.S. refused to recognize Vietnam's independence"
+ATOM us_supported_france_reconquest: "The U.S. supported France in reconquering its former colony"
+ATOM us_denied_vietnam_independence_for_nine_years: "The U.S. denied Vietnam the right of independence for nine years after 1945"
+ATOM us_paid_majority_of_french_war_costs: "The U.S. met about 80 percent of the French war costs"
+ATOM us_encouraged_france_to_continue_war: "The U.S. encouraged France to continue the war with financial and military supplies"
+ATOM geneva_agreements_promised_independence_and_land_reform: "The Geneva agreements promised renewed independence and land reform"
+ATOM us_opposed_ho_unifying_vietnam: "The U.S. was determined that Ho should not unify the temporarily divided nation"
+ATOM us_supported_premier_diem_vicious_dictator: "The U.S. supported Premier Diem, described as a vicious modern dictator"
+ATOM diem_routed_opposition_supported_landlords_refused_reunification: "Diem routed opposition, supported extortionist landlords, and refused to discuss reunification"
+ATOM us_influence_and_troops_supported_quelling_insurgency: "U.S. influence and increasing U.S. troops supported quelling the insurgency aroused by Diem's methods"
+ATOM us_supported_corrupt_inept_governments_without_popular_support: "The U.S. supported governments described as corrupt, inept, and without popular support"
+ATOM vietnamese_languish_under_us_bombs_and_see_us_as_enemy: "Vietnamese languish under U.S. bombs and consider the U.S. the real enemy"
+ATOM us_herds_people_into_concentration_camps_fortified_hamlets: "The U.S. herds people into concentration camps called fortified hamlets"
+ATOM us_poisoned_water_and_destroyed_crops_and_trees: "The U.S. poisons water and destroys crops and trees"
+ATOM american_firepower_causes_many_more_casualties_than_viet_cong: "American firepower causes many more casualties than Viet Cong-inflicted injuries"
+ATOM us_may_have_killed_a_million_mostly_children: "The U.S. may have killed a million Vietnamese, mostly children"
+FORMULA f_refusal_and_support_france: vietnam_declared_independence_1945 -> us_refused_to_recognize_vietnam_independence
+FORMULA f_support_france_follows_refusal: us_refused_to_recognize_vietnam_independence -> us_supported_france_reconquest
+FORMULA f_diem_methods_arouse_insurgency: diem_routed_opposition_supported_landlords_refused_reunification -> us_influence_and_troops_supported_quelling_insurgency
+FORMULA f_bombs_lead_enemy_perception: vietnamese_languish_under_us_bombs_and_see_us_as_enemy -> americans_bear_greatest_responsibility_to_end_conflict
+
+# Understanding the enemy and mistrust
+ATOM compassion_requires_seeing_enemys_point_of_view: "Compassion and non-violence help us see the enemy's point of view and assessment"
+ATOM nlffears_exclusion_from_settlement: "The NLF denies the reality of a peace settlement from which it will be excluded"
+ATOM hanoi_has_understandable_mistrust_due_to_betrayals: "Hanoi has a deep but understandable mistrust due to past betrayals"
+ATOM us_prevented_1954_elections_that_would_bring_ho_to_power: "After 1954 the U.S. conspired to prevent elections that would likely bring Ho Chi Minh to power"
+ATOM american_troops_initial_breach_of_geneva_on_foreign_troops: "Hanoi considered American troops supporting Diem an initial breach of Geneva foreign-troop terms"
+ATOM us_refused_truth_about_north_vietnam_overtures_for_peace: "U.S. leaders refused to tell the truth about earlier North Vietnamese overtures for peace"
+FORMULA f_enemy_view_reveals_weaknesses: compassion_requires_seeing_enemys_point_of_view -> conflicts_require_trustful_give_and_take
+FORMULA f_betrayals_support_mistrust: us_prevented_1954_elections_that_would_bring_ho_to_power -> hanoi_has_understandable_mistrust_due_to_betrayals
+
+# Impact on U.S. troops and moral clarity
+ATOM king_concerned_about_us_troops_in_vietnam: "King is deeply concerned about U.S. troops in Vietnam"
+ATOM troops_face_brutalizing_process_of_war: "Troops are subjected to the brutalizing process of war"
+ATOM troops_gain_cynicism_because_claimed_goals_not_involved: "Troops gain cynicism because claimed goals are not really involved"
+ATOM us_is_on_side_of_wealthy_and_secure_creating_hell_for_poor: "The U.S. is on the side of the wealthy and secure while creating a hell for the poor"
+ATOM madness_must_cease: "This madness must cease"
+ATOM initiative_to_stop_war_must_be_ours: "The initiative to stop the war must be ours"
+FORMULA f_cynicism_supports_madness: troops_gain_cynicism_because_claimed_goals_not_involved -> madness_must_cease
+FORMULA f_responsibility_implies_initiative: americans_bear_greatest_responsibility_to_end_conflict -> initiative_to_stop_war_must_be_ours
+
+# Concrete proposals to end the war
+ATOM should_end_all_bombing_north_and_south: "The U.S. should end all bombing in North and South Vietnam"
+ATOM should_declare_unilateral_ceasefire: "The U.S. should declare a unilateral cease-fire to create atmosphere for negotiation"
+ATOM should_prevent_other_battlegrounds_by_curtailing_build_up: "The U.S. should prevent other battlegrounds by curtailing military build-up in Thailand and interference in Laos"
+ATOM should_accept_nlf_has_substantial_support_and_role: "The U.S. should accept that the NLF has substantial support and must play a role in negotiations and future government"
+ATOM should_set_date_to_remove_all_foreign_troops_per_geneva: "The U.S. should set a date to remove all foreign troops per the 1954 Geneva Agreement"
+ATOM should_offer_asylum_to_those_who_fear_new_regime: "The U.S. should offer asylum to Vietnamese who fear for their life under a new regime including the NLF"
+ATOM should_make_reparations_and_provide_medical_aid: "The U.S. should make reparations and provide needed medical aid"
+FORMULA f_initiative_implies_end_bombing: initiative_to_stop_war_must_be_ours -> should_end_all_bombing_north_and_south
+FORMULA f_initiative_implies_ceasefire: initiative_to_stop_war_must_be_ours -> should_declare_unilateral_ceasefire
+FORMULA f_initiative_implies_withdrawal_date: initiative_to_stop_war_must_be_ours -> should_set_date_to_remove_all_foreign_troops_per_geneva
+FORMULA f_accept_nlf_support_implies_nlf_role: should_accept_nlf_has_substantial_support_and_role -> conflicts_require_trustful_give_and_take
+
+# Churches, protest, and conscientious objection
+ATOM churches_and_synagogues_must_seek_creative_protest: "Churches and synagogues must seek every creative means of protest"
+ATOM should_counsel_young_men_and_challenge_conscientious_objection: "We should counsel young men and challenge them with conscientious objection"
+ATOM morehouse_students_choose_conscientious_objection: "More than 70 Morehouse College students are choosing conscientious objection"
+ATOM ministers_should_give_up_exemptions_and_seek_objector_status: "Ministers of draft age should give up exemptions and seek conscientious objector status"
+ATOM everyone_of_humane_convictions_must_protest: "Every person of humane convictions must decide on protest and all must protest"
+FORMULA f_end_war_call_implies_protest: initiative_to_stop_war_must_be_ours -> churches_and_synagogues_must_seek_creative_protest
+FORMULA f_humane_convictions_implies_protest: everyone_of_humane_convictions_must_protest -> churches_and_synagogues_must_seek_creative_protest
+
+# Deeper malady and revolution of values
+ATOM war_is_symptom_of_deeper_malady_in_american_spirit: "The Vietnam war is a symptom of a deeper malady in the American spirit"
+ATOM without_profound_change_protest_committees_continue_next_generation: "Without profound change, committees and marches will continue without end"
+ATOM america_on_wrong_side_of_world_revolution: "America is on the wrong side of a world revolution"
+ATOM us_acts_to_maintain_stability_for_investments: "The U.S. acts to maintain social stability for its investments"
+ATOM america_role_makes_violent_revolution_inevitable: "By making peaceful revolution impossible, America makes violent revolution inevitable"
+ATOM nation_must_undergo_radical_revolution_of_values: "The nation must undergo a radical revolution of values"
+ATOM machines_computers_profit_property_rights_valued_over_people: "Machines, computers, profit, and property rights are valued over people"
+ATOM racism_materialism_militarism_triplets_not_conquered_under_wrong_values: "Racism, materialism, and militarism are incapable of being conquered under such values"
+ATOM spending_more_on_military_than_social_uplift_approaches_spiritual_death: "Spending more on military defense than on social uplift approaches spiritual death"
+FORMULA f_war_symptom_implies_values_revolution: war_is_symptom_of_deeper_malady_in_american_spirit -> nation_must_undergo_radical_revolution_of_values
+FORMULA f_wrong_values_block_conquest: machines_computers_profit_property_rights_valued_over_people -> racism_materialism_militarism_triplets_not_conquered_under_wrong_values
+FORMULA f_military_spending_implies_spiritual_death: spending_more_on_military_than_social_uplift_approaches_spiritual_death -> nation_must_undergo_radical_revolution_of_values
+
+# War, communism, and justice
+ATOM war_is_not_the_answer: "War is not the answer"
+ATOM communism_not_defeated_by_atomic_or_nuclear_weapons: "Communism will not be defeated by atomic bombs or nuclear weapons"
+ATOM should_not_label_everyone_communist_or_appeaser: "We must not call everyone a communist or appeaser who advocates diplomacy and restraint"
+ATOM positive_thrust_for_democracy_best_defense_is_justice: "A positive thrust for democracy and justice is the greatest defense against communism"
+ATOM poverty_insecurity_injustice_are_fertile_soil_for_communism: "Poverty, insecurity, and injustice are fertile soil for communism"
+FORMULA f_war_not_answer_implies_no_nukes_solution: war_is_not_the_answer -> communism_not_defeated_by_atomic_or_nuclear_weapons
+FORMULA f_remove_conditions_defends_against_communism: poverty_insecurity_injustice_are_fertile_soil_for_communism -> positive_thrust_for_democracy_best_defense_is_justice
+
+# Urgency and warning
+ATOM must_move_past_indecision_to_action: "We must move past indecision to action"
+ATOM if_we_do_not_act_we_will_be_dragged_down_corridors_of_time: "If we do not act we will be dragged down shameful corridors of time"
+ATOM choice_is_ours_in_crucial_moment: "The choice is ours in this crucial moment of human history"
+FORMULA f_inaction_implies_shameful_future: if_we_do_not_act_we_will_be_dragged_down_corridors_of_time -> must_move_past_indecision_to_action
