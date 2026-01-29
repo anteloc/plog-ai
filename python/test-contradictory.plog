@@ -1,0 +1,15 @@
+# Test case: Contradictory reasoning (should fail)
+# The speaker makes contradictory claims about Socrates
+
+ATOM socrates_is_man: "Socrates is a man"
+ATOM socrates_is_mortal: "Socrates is mortal"
+ATOM socrates_is_immortal: "Socrates is immortal"
+
+# Reasoning 1: Being a man implies mortality
+FORMULA men_are_mortal: socrates_is_man -> socrates_is_mortal
+
+# Reasoning 2: But the speaker also claims Socrates is immortal because he's wise
+FORMULA wisdom_grants_immortality: socrates_is_man -> socrates_is_immortal
+
+# Reasoning 3: Mortality and immortality are mutually exclusive
+FORMULA mortality_exclusion: socrates_is_mortal -> ~socrates_is_immortal

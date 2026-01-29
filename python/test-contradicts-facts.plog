@@ -1,0 +1,10 @@
+# Test case: Formula directly contradicts facts
+# The speaker's reasoning denies one of their own stated facts
+
+ATOM sky_is_blue: "The sky is blue"
+ATOM grass_is_green: "The grass is green"
+ATOM water_is_wet: "Water is wet"
+
+# Flawed reasoning: If the sky is blue, then grass is NOT green
+# This directly contradicts the fact that grass IS green
+FORMULA flawed_inference: sky_is_blue -> ~grass_is_green
