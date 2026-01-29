@@ -1,6 +1,6 @@
 # plog-ai
 
-> AI-powered logical analysis tool for detecting inconsistencies and fallacies in natural language texts
+> AI-powered logical analysis tool for detecting contradictions, inconsistencies, and fallacies in natural language texts
 
 [![Python 3.10+](https://img.shields.io/badge/python-3.10+-blue.svg)](https://www.python.org/downloads/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
@@ -10,9 +10,10 @@
 ## Features
 
 - **Automated Text Analysis** — Feed documents to an AI assistant that converts prose into formal logic
-- **Formal Verification** — Uses Z3 theorem prover to detect logical contradictions
-- **Fallacy Detection** — Identifies logical fallacies in arguments and reasoning
-- **Interactive Simulation** — Explore "what-if" scenarios by toggling facts and observing effects
+- **Formal Verification** — Uses Z3 SAT solver to detect logical contradictions
+- **Fallacy Detection** — Identifies and reports logical fallacies using tagged formulas (`FALLACY_*` atoms, `f_tag_*` formulas)
+- **Plain English Reports** — Human-readable analysis output explaining what's wrong and why
+- **Interactive Simulation** — Explore "what-if" scenarios by toggling facts, formulas, and fallacy detection
 - **Multiple Logic Systems** — Supports both propositional and predicate (first-order) logic
 
 ## Use Cases
@@ -32,16 +33,16 @@
 ### Installation
 
 ```bash
-git clone https://github.com/anteloc/plog-ai.git
+git clone https://github.com/yourusername/plog-ai.git
 cd plog-ai/python
 
-pip install PyYAML lark z3-solver
+pip install PyYAML lark z3-solver simple-term-menu
 ```
 
 Verify the installation:
 
 ```bash
-python plog.py --help
+python plog_simulator.py
 ```
 
 ## Usage
@@ -66,65 +67,119 @@ Follow the attached instructions and process the attached document.
 The AI will produce:
 - `logic-results.plog` — Your text translated to formal logic
 - `logic-analysis.json` — Validation results
-- A plain-English interpretation of any inconsistencies found
-
+ - A plain-English interpretation of any inconsistencies found
+ 
+### Direct Analysis (Non-Interactive)
+ 
+Analyze a `.plog` file and get a plain English report:
+ 
+ ```bash
+python plog_simulator.py document.plog
+ ```
+ 
+The tool will output:
+1. **Fallacies detected** (if any) — Listed first for immediate visibility
+2. **Facts stated** — What the text claims as true
+3. **Logical connections** — The reasoning/inferences made
+4. **Contradictions** (if any) — Which statements conflict
+5. **Summary** — Plain English bottom line
+ 
+Exit codes: `0` = consistent, `1` = inconsistencies or fallacies found
+ 
 ### Interactive Simulation
 
-Run the simulator to explore "what-if" scenarios on any `.plog` file:
+Explore "what-if" scenarios by toggling facts and formulas:
 
 ```bash
-python plog.py -i logic-results.plog
+python plog_simulator.py --interactive document.plog
+# or
+python plog_simulator.py -i document.plog
 ```
 
-**Simulation commands:**
-| Command | Action |
-|---------|--------|
-| `[tag]` | Toggle negation on a fact or formula (e.g., `a2`) |
-| `e` | Evaluate current state for contradictions |
-| `q` | Quit simulation |
+**Interactive features:**
+- **Toggle Facts** — Switch between TRUE/FALSE to test scenarios
+- **Toggle Formulas** — Turn reasoning rules ON/OFF
+- **Toggle Fallacy Detection** — Mark fallacies as ON (consider) or OFF (ignore)
+- **Evaluate** — Run Z3 analysis on current configuration
+- **Detailed Analysis** — View full configuration and results
+- **Reset** — Return to original state
 
-### Example Session
-
-```
-================================================================================
-FACTS
-================================================================================
-    [ a1] plato_is_man       : TRUE  - "Plato is a man"
-    [ a2] plato_is_not_animal: TRUE  - "Plato is not an animal"
-
-================================================================================
-FORMULAE
-================================================================================
-    [ f1] f_plato_is_man_not_animal:
-         (a1) plato_is_man -> (a2) plato_is_not_animal
-
-================================================================================
-> e
-
-EVALUATION RESULT: SAT (No contradictions found)
-```
-
-Toggle `a2` to FALSE and re-evaluate:
+### Example Output (Non-Interactive)
 
 ```
-> a2
-> e
+======================================================================
+  🔍 TEXT LOGIC CHECKER - ANALYSIS REPORT
+======================================================================
 
-CONFLICTING_FACTS:
-- (a1) plato_is_man: AFFIRMING "Plato is a man"
-- (a2 ~) plato_is_not_animal: DENYING "Plato is not an animal"
+  ⚠️ FALLACIES DETECTED: The reasoning contains logical fallacies
+----------------------------------------------------------------------
 
-CONFLICTING_FORMULAE:
-- (f1) UNSATISFIABLE: plato_is_man -> ~plato_is_not_animal
-```
+======================================================================
+  🚩 LOGICAL FALLACIES DETECTED
+======================================================================
 
-## Project Structure
+  1. 🚩 Appeal to popularity - 'Everyone knows' does not establish truth
+  2. 🚩 Slippery slope - No logical necessity that recycling leads to banning cars
+  3. 🚩 False dilemma - Presents only two options when others exist
 
-```
-plog-ai/
+----------------------------------------------------------------------
+
+📋 WHAT THE TEXT STATES AS FACTS:
+----------------------------------------------------------------------
+  1. "Everyone knows the recycling plan will bankrupt our town"
+  2. "There is a new recycling plan"
+  ...
+
+🔗 THE LOGIC PRESENT IN THE TEXT:
+----------------------------------------------------------------------
+  1. IF "Everyone knows X", THEN "X is true"
+  2. IF "We allow recycling", THEN "They will ban cars"
+  ...
+
+ ================================================================================
+  📝 SUMMARY
+======================================================================
+ 
+⚠️ BOTTOM LINE: This text contains 3 logical fallacy(ies). 
+The author uses flawed reasoning techniques to persuade.
+ 
+======================================================================
+ ```
+ 
+### Example Interactive Session
+ 
+ ```
+══════════════════════════════════════════════════════════════════════
+  🔬 WHAT-IF SIMULATOR - Interactive Mode
+══════════════════════════════════════════════════════════════════════
+
+📄 Loaded: argument.plog
+
+══════════════════════════════════════════════════════════════════════
+  📋 FACTS (4 items)
+══════════════════════════════════════════════════════════════════════
+  1    ✅ TRUE     "The defendant was at the scene"
+  2    ❌ FALSE    "The defendant has an alibi"        ← CHANGED
+  ...
+
+══════════════════════════════════════════════════════════════════════
+  🚩 FALLACY DETECTION (2 items)
+══════════════════════════════════════════════════════════════════════
+  T1   🚩 ON       Appeal to authority
+  T2   ⚪ OFF      Ad hominem                          ← NOT A FALLACY
+
+══════════════════════════════════════════════════════════════════════
+  ⚡ STATUS: ✅ CONSISTENT
+══════════════════════════════════════════════════════════════════════
+ ```
+ 
+ ## Project Structure
+ 
+ ```
+ plog-ai/
 ├── python/
-│   ├── plog.py          # Main tool: parser, Z3 translator, simulator
-│   └── plog.lark        # Grammar specification for .plog format
+│   ├── plog_simulator.py  # Main tool: parser, Z3 translator, analyzer, simulator
+│   └── plog.lark          # Grammar specification for .plog format
 ├── prompts/
 │   ├── instructions-pred-logic.md   # AI instructions (predicate logic)
 │   └── instructions-prop-logic.md   # AI instructions (propositional logic)
@@ -143,16 +198,28 @@ plog-ai/
 A simple declarative format for logic statements:
 
 ```plog
-# Atoms represent facts (assumed TRUE by default)
-ATOM plato_is_man: "Plato is a man"
-ATOM plato_is_mortal: "Plato is mortal"
+ # Atoms represent facts (assumed TRUE by default)
+ATOM socrates_is_man: "Socrates is a man"
+ATOM socrates_is_mortal: "Socrates is mortal"
 ATOM men_are_mortal: "All men are mortal"
-
-# Formulas express logical relationships
-FORMULA f_mortality: (plato_is_man & men_are_mortal) -> plato_is_mortal
+ 
+ # Formulas express logical relationships
+FORMULA f_mortality: (socrates_is_man & men_are_mortal) -> socrates_is_mortal
 ```
 
-**Supported operators:**
+### Fallacy Tagging Convention
+
+To enable fallacy detection, use these naming conventions:
+
+```plog
+# FALLACY_* atoms are hidden metadata (descriptions of fallacy types)
+ATOM FALLACY_appeal_to_popularity: "FALLACY: Appeal to popularity - 'Everyone knows' does not establish truth"
+
+# f_tag_* formulas trigger fallacy detection
+FORMULA f_tag_appeal_to_popularity: everyone_knows_X -> FALLACY_appeal_to_popularity
+ ```
+ 
+ **Supported operators:**
 | Operator | Symbols | Description |
 |----------|---------|-------------|
 | NOT | `~` `¬` `!` | Negation |
@@ -164,16 +231,25 @@ FORMULA f_mortality: (plato_is_man & men_are_mortal) -> plato_is_mortal
 | IMPLIES | `->` `→` | Implication |
 | IFF | `<->` `↔` | Biconditional |
 
-## How It Works
-
-1. **Translation** — An LLM reads your document and converts statements into `.plog` format atoms and formulas
-2. **Parsing** — The Lark parser validates syntax against the `plog.lark` grammar
-3. **Transformation** — Parse trees are converted to Z3 boolean expressions
-4. **Solving** — Z3 checks satisfiability:
-   - **SAT** → No contradictions detected
-   - **UNSAT** → Contradiction found; conflicting facts/formulas reported
-
-## Examples
+ ## How It Works
+ 
+1. **Translation** — An LLM reads your document and converts statements into `.plog` format
+2. **Parsing** — Lark parser validates syntax against `plog.lark` grammar
+3. **Categorization** — Items are separated into:
+   - Regular atoms (facts) — assumed TRUE
+   - Regular formulas (reasoning) — logical connections
+   - Fallacy atoms (`FALLACY_*`) — hidden metadata
+   - Fallacy tag formulas (`f_tag_*`) — detection rules
+4. **Fallacy Detection** — Tag formulas are evaluated to find active fallacies
+5. **Consistency Check** — Z3 SAT solver verifies logical consistency:
+    - **SAT** → No contradictions detected
+   - **UNSAT** → Contradiction found; minimal conflict set reported
+6. **Reporting** — Results presented in plain English with:
+   - Fallacies listed first (most actionable)
+   - Contradictions explained with involved formulas
+   - Human-readable summary
+ 
+ ## Examples
 
 The `plog/` directory contains analyzed examples:
 
@@ -185,25 +261,24 @@ The `plog/` directory contains analyzed examples:
 | `fallacies-example-pred.plog` | Common logical fallacies demonstration |
 
 ## Limitations
-
-- Reports only the **first** inconsistency found, not all of them
-- Requires manual review of AI-generated translations for accuracy
-- Best suited for argumentative/declarative texts
-
-## WIP
-
-Current `plog.py` and `plog.lark` files have been mostly generated via chat AIs, e.g. Claude and ChatGPT mostly, so the code requires quite some refactoring and cleanup effort to be in good shape.
-
-Also, output from the tool, both in interactive and non-interactive mode, requires more polishing.
-
-Main focus should be on improving readability and making more understandable the "what's" and "why's":
-
-- What is inconsistent/contradictory/a fallacy on this text?
-- Why this or that fact or assumption cause a contradiction?
-
-Another possibility I've been considering would be adding this script as part of a SKILL for AI agents, that would help users to "live" review texts for contradictions or inconsistencies.
-
-## Contributing
+ 
+- Reports the **minimal conflict set**, not necessarily all contradictions
+ - Requires manual review of AI-generated translations for accuracy
+ - Best suited for argumentative/declarative texts
+- Fallacy detection requires proper tagging in the `.plog` file
+ 
+## Roadmap / WIP
+ 
+- [ ] Improve explanation of **why** specific facts/formulas cause contradictions
+- [ ] Add support for analyzing multiple files
+- [ ] Create SKILL integration for AI agents (live document review)
+- [ ] Add more fallacy detection templates
+- [ ] Web interface for non-technical users
+ 
+> **Note:** This tool was developed with assistance from Claude and ChatGPT. 
+> Code continues to be refined for clarity and maintainability.
+ 
+ ## Contributing
 
 This is an experimental project exploring the intersection of LLMs and formal verification. Contributions, ideas, and feedback are welcome!
 
