@@ -1,0 +1,23 @@
+# This CITATION.cff file was generated with cffinit.
+# Visit https://bit.ly/cffinit to generate yours today!
+
+cff-version: 1.2.0
+title: plog-ai
+message: >-
+  If you use this software or research work, please cite it using the
+  metadata from this file.
+type: software
+authors:
+  - given-names: Carlos
+    family-names: Antelo
+repository-code: 'https://github.com/anteloc/plog-ai'
+abstract: An AI-based tool for detecting fallacies and inconsistencies in texts
+keywords:
+  - logic
+  - fallacy
+  - inconsistency
+  - text analysis
+  - generative
+  - AI
+  - LLM
+license: CC-BY-SA-4.0
